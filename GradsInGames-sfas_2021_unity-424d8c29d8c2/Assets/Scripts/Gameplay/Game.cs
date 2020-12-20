@@ -18,7 +18,7 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
-        if(_output.IsIdle)
+        if (_output.IsIdle)
         {
             if (_currentBeat == null)
             {
@@ -35,7 +35,7 @@ public class Game : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(_currentBeat != null)
+            if (_currentBeat != null)
             {
                 if (_currentBeat.ID == 1)
                 {
@@ -59,8 +59,17 @@ public class Game : MonoBehaviour
                     if (Input.GetKeyDown(alpha) || Input.GetKeyDown(keypad))
                     {
                         ChoiceData choice = _currentBeat.Decision[count];
-                        DisplayBeat(choice.NextID);
-                        break;
+
+                        if (choice.GetChoiceType == ChoiceType.Function)
+                        {
+                            FunctionBeat(choice.NextID);
+                            break;
+                        }
+                        else
+                        {
+                            DisplayBeat(choice.NextID);
+                            break;
+                        }
                     }
                 }
 
@@ -70,9 +79,21 @@ public class Game : MonoBehaviour
         }
     }
 
+
+    private void FunctionBeat(int id)
+    {
+        BeatData data = _data.GetBeatById(id);
+        SendMessage(data.DisplayText);
+
+       // StartCoroutine(DoDisplay(data));
+        _currentBeat = data;
+    }
+
+
     private void DisplayBeat(int id)
     {
         BeatData data = _data.GetBeatById(id);
+
         StartCoroutine(DoDisplay(data));
         _currentBeat = data;
     }
@@ -88,11 +109,11 @@ public class Game : MonoBehaviour
 
         _output.Display(data.DisplayText);
 
-        while(_output.IsBusy)
+        while (_output.IsBusy)
         {
             yield return null;
         }
-        
+
         for (int count = 0; count < data.Decision.Count; ++count)
         {
             ChoiceData choice = data.Decision[count];
@@ -104,9 +125,24 @@ public class Game : MonoBehaviour
             }
         }
 
-        if(data.Decision.Count > 0)
+        if (data.Decision.Count > 0)
         {
             _output.ShowWaitingForInput();
         }
     }
+
+    public void StartGame()
+    {
+        _output.Clear();
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(2).gameObject.SetActive(true);
+        transform.GetChild(3).gameObject.SetActive(true);
+    }
+
+    public void EndGame()
+    {
+        Application.Quit();
+    }
+
+
 }

@@ -55,29 +55,32 @@ public class TextDisplay : MonoBehaviour
 
     private IEnumerator DoClearText()
     {
-        int currentLetter = 0;
-        char[] charArray = _displayText.text.ToCharArray();
-
-        while (currentLetter < charArray.Length)
+        if (gameObject.activeSelf)
         {
-            if (currentLetter > 0 && charArray[currentLetter - 1] != '\n')
+            int currentLetter = 0;
+            char[] charArray = _displayText.text.ToCharArray();
+
+            while (currentLetter < charArray.Length)
             {
-                charArray[currentLetter - 1] = ' ';
+                if (currentLetter > 0 && charArray[currentLetter - 1] != '\n')
+                {
+                    charArray[currentLetter - 1] = ' ';
+                }
+
+                if (charArray[currentLetter] != '\n')
+                {
+                    charArray[currentLetter] = '_';
+                }
+
+                _displayText.text = charArray.ArrayToString();
+                ++currentLetter;
+                yield return null;
             }
 
-            if (charArray[currentLetter] != '\n')
-            {
-                charArray[currentLetter] = '_';
-            }
-
-            _displayText.text = charArray.ArrayToString();
-            ++currentLetter;
-            yield return null;
+            _displayString = string.Empty;
+            _displayText.text = _displayString;
+            _state = State.Idle;
         }
-
-        _displayString = string.Empty;
-        _displayText.text = _displayString;
-        _state = State.Idle;
     }
 
     public void Display(string text)
@@ -105,6 +108,7 @@ public class TextDisplay : MonoBehaviour
         {
             StopAllCoroutines();
             _state = State.Busy;
+           
             StartCoroutine(DoClearText());
         }
     }

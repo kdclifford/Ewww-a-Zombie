@@ -120,6 +120,13 @@ public class StoryEditor : EditorWindow
             AddChoice(choiceList, newBeatId);
         }
 
+        if (GUILayout.Button((choiceList.arraySize == 0 ? "Add Function Choice" : "Add Another Function Choice"), GUILayout.Height(100)))
+        {
+            int newBeatId = FindUniqueId(beatList);
+            AddBeat(beatList, newBeatId);
+            AddFunctionChoice(choiceList, newBeatId);
+        }
+
         EditorGUILayout.EndHorizontal();
     }
 
@@ -207,8 +214,27 @@ public class StoryEditor : EditorWindow
         SerializedProperty arrayElement = choiceList.GetArrayElementAtIndex(index);
         SerializedProperty text = arrayElement.FindPropertyRelative("_text");
         SerializedProperty nextId = arrayElement.FindPropertyRelative("_beatId");
+        SerializedProperty type = arrayElement.FindPropertyRelative("_type");
 
         text.stringValue = initialText;
         nextId.intValue = beatId;
+        type.enumValueIndex = 1;
     }
+
+    private void AddFunctionChoice(SerializedProperty choiceList, int beatId, string initialText = "New Beat Choice")
+    {
+        int index = choiceList.arraySize;
+        choiceList.arraySize += 1;
+        SerializedProperty arrayElement = choiceList.GetArrayElementAtIndex(index);
+        SerializedProperty text = arrayElement.FindPropertyRelative("_text");
+        SerializedProperty nextId = arrayElement.FindPropertyRelative("_beatId");
+        SerializedProperty type = arrayElement.FindPropertyRelative("_type");
+        SerializedProperty function = arrayElement.FindPropertyRelative("_functionName");
+
+       // text.stringValue = initialText;
+        nextId.intValue = beatId;
+        type.enumValueIndex = 0;
+        function.stringValue = initialText;
+    }
+
 }
