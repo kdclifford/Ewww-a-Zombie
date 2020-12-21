@@ -22,7 +22,7 @@ MonoBehaviour:
       _beatId: 3
       _type: 0
       _functionName: New Beat Choice
-    _text: hi
+    _text: Play Tetris?
     _id: 1
   - _choices: []
     _text: StartGame
