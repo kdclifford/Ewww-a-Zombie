@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     {
         _RB = GetComponent<Rigidbody>();
     }
+    public Vector3 point;
 
     // Update is called once per frame
     void Update()
@@ -21,22 +22,23 @@ public class PlayerController : MonoBehaviour
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane ground = new Plane(Vector3.up, Vector3.zero);
 
+       // Debug.Log(Input.mousePosition);
+
         float rayLength;
 
         if (ground.Raycast(cameraRay, out rayLength))
         {
-            Vector3 point = cameraRay.GetPoint(rayLength);
+            point = cameraRay.GetPoint(rayLength);
             Debug.DrawLine(cameraRay.origin, point, Color.red);
-            transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
-           
+            transform.LookAt(new Vector3(point.x, transform.position.y, point.z));           
         }
 
         //Quaternion newRot = transform.rotation;
         //newRot.eulerAngles = new Vector3(0, transform.rotation.y, 0);
         //transform.rotation = newRot;
+       // _RB.angularVelocity = Vector3.zero;
 
-
-        move = move.normalized * _movementSpeed * Time.deltaTime;
+        move = move.normalized * _movementSpeed;
 
         //_RB.MovePosition(transform.position + Time.deltaTime * _movementSpeed * transform.TransformDirection(move));
         _RB.velocity = move;
