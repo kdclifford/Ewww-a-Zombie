@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody _RB;
     private Animator _Animator;
-
+    public GameObject aimPoint;
+    public float hieght;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,9 +22,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        Vector2 walkRot = CurrentDirection(new Vector2(move.x, move.z), gameObject);
 
-        _Animator.SetFloat("Xmove", move.x);
-        _Animator.SetFloat("Ymove", move.z);
+        _Animator.SetFloat("Xmove", walkRot.x);
+        _Animator.SetFloat("Ymove", walkRot.y);
 
         //Get the Screen position of the mouse
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -36,8 +38,10 @@ public class PlayerController : MonoBehaviour
         if (ground.Raycast(cameraRay, out rayLength))
         {
             point = cameraRay.GetPoint(rayLength);
+            point.y = hieght;
             Debug.DrawLine(cameraRay.origin, point, Color.red);
-            transform.LookAt(new Vector3(point.x, transform.position.y, point.z));           
+            transform.LookAt(new Vector3(point.x, transform.position.y + hieght, point.z));
+            aimPoint.transform.position = point;
         }
 
         //Quaternion newRot = transform.rotation;
