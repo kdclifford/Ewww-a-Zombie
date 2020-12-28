@@ -8,15 +8,15 @@ public class PlayerAnimations : MonoBehaviour
 
     public Animator _GunPose;
     public EGun currentGun = EGun.NoGun;
-    private EGun _Gun1 = EGun.Shotgun;
+    private EGun _Gun1 = EGun.Rifle;
     private EGun _Gun2 = EGun.Pistol;
 
-    public GameObject _PistolRightHand;
-    public GameObject _PistolLeftHand;
-    public GameObject _ShotgunRightHand;
-    public GameObject _ShotgunLeftHand;
-    public TwoBoneIKConstraint _RightHand;
-    public TwoBoneIKConstraint _LefttHand;
+    //public GameObject _PistolRightHand;
+    //public GameObject _PistolLeftHand;
+    //public GameObject _ShotgunRightHand;
+    //public GameObject _ShotgunLeftHand;
+    //public TwoBoneIKConstraint _RightHand;
+    //public TwoBoneIKConstraint _LefttHand;
 
     // Start is called before the first frame update
     void Start()
@@ -29,15 +29,15 @@ public class PlayerAnimations : MonoBehaviour
     {
        if(Input.GetKey(KeyCode.I))
         {
-            if(currentGun != EGun.Shotgun)
+            if(currentGun != _Gun1)
             {
-                EquptGun(EGun.Shotgun);
+                EquptGun(_Gun1);
                // SetShotgun();
             }
-            else if(currentGun != EGun.Pistol)
+            else if(currentGun != _Gun2)
             {
                 
-                EquptGun(EGun.Pistol);
+                EquptGun(_Gun2);
               //  SetPistol();
             }
         }
@@ -79,4 +79,12 @@ public class PlayerAnimations : MonoBehaviour
         currentGun = EGun.Shotgun;
     }
 
+    public void CurrentRifle()
+    {
+        currentGun = EGun.Rifle;
+    }
+    public void CurrentNoGun()
+    {
+        currentGun = EGun.NoGun;
+    }
 }

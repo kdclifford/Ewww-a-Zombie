@@ -6,7 +6,7 @@ using TMPro;
 public class LowPowerTimer : MonoBehaviour
 {
     public float startTime;
-    private float timer = 0;
+    private float _Timer = 0;
     private TMP_Text _timerText;
     private Animator _laptopAnimatior;
     private GameObject[] _lights;
@@ -16,6 +16,7 @@ public class LowPowerTimer : MonoBehaviour
     public Color lightOff = new Color(0, 0, 0, 1);
     public Color newLightColour;
     public float timerInverse;
+    public Animator _CameraAnim;
 
     private void Awake()
     {
@@ -38,19 +39,20 @@ public class LowPowerTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timer = startTime;
+        _Timer = startTime;
+        _CameraAnim = Camera.main.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timer >= 0)
+        if (_Timer >= 0)
         {
-        timerInverse = 1.0f - (timer / startTime);
+        timerInverse = 1.0f - (_Timer / startTime);
             newLightColour = Color.Lerp(lightOn, lightOff, timerInverse);
             UpdateTimer();
             UpdateText();
-            LightsOff();
+            LightsOff();            
         }
     
 
@@ -58,20 +60,21 @@ public class LowPowerTimer : MonoBehaviour
 
     void UpdateTimer()
     {
-        if (timer > 0)
+        if (_Timer > 0)
         {
-            timer -= Time.deltaTime;
+            _Timer -= Time.deltaTime;
         }
 
-        if (timer <= 0)
+        if (_Timer <= 0)
         {
             PlayLaptopAnimation();
+            CameraZoom();
         }
     }
 
     void UpdateText()
     {
-        _timerText.text = "Low Power: " + Mathf.Round(timer).ToString() + "%";
+        _timerText.text = "Low Power: " + Mathf.Round(_Timer).ToString() + "%";
     }
 
     void PlayLaptopAnimation()
@@ -86,6 +89,11 @@ public class LowPowerTimer : MonoBehaviour
             _lightRenderer[i].material.SetColor("_EmissionColor", newLightColour);
             _lightComp[i].intensity = 1 - timerInverse;
         }
+    }
+
+    void CameraZoom()
+    {
+        _CameraAnim.SetTrigger("CameraZoomOut");
     }
 
     //void LightsOn()
