@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -4427,7 +4427,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &456969577
 Transform:
   m_ObjectHideFlags: 0
@@ -10449,6 +10449,23 @@ Texture2D:
     offset: 0
     size: 0
     path: 
+--- !u!1 &982909601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1864420538393818404, guid: 67c46459739245045ac1fe89ae1639e4, type: 3}
+  m_PrefabInstance: {fileID: 2060177453}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &982909607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982909601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af9eff764a1ced04eb76df9d12e66955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!28 &991556438
 Texture2D:
   m_ObjectHideFlags: 0
