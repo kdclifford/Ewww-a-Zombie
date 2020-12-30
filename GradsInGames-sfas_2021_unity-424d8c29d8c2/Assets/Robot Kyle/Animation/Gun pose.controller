@@ -524,9 +524,6 @@ AnimatorStateMachine:
     m_State: {fileID: 1000826564143852291}
     m_Position: {x: 20, y: 560, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1488495684461394952}
-    m_Position: {x: 55, y: 625, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 7603230221476361565}
     m_Position: {x: -120, y: 100, z: 0}
   - serializedVersion: 1
@@ -567,32 +564,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &1488495684461394952
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: FlashLight_Unequpt
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 668e41587d91e634886a332e16d1ae6f, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1101 &1729379928349287632
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

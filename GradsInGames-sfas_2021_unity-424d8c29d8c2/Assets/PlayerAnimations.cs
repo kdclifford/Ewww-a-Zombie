@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerAnimations : MonoBehaviour
 {
 
-    public Animator _GunPose;
+    private Animator _GunPose;
     public EGun currentGun = EGun.NoGun;
     private EGun _Gun1 = EGun.Rifle;
     private EGun _Gun2 = EGun.Pistol;
@@ -19,10 +19,14 @@ public class PlayerAnimations : MonoBehaviour
     //public TwoBoneIKConstraint _LefttHand;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+  
+        void Start()
+        {
+            _GunPose = GetComponent<Animator>();
+            _GunPose.enabled = false;
+            _GunPose.enabled = true;
+        }
+    
 
     // Update is called once per frame
     void Update()

@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody _RB;
     private Animator _Animator;
-    public GameObject aimPoint;
+   // public GameObject aimPoint;
     public float hieght;
     // Start is called before the first frame update
     void Start()
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
             point.y = hieght;
             Debug.DrawLine(cameraRay.origin, point, Color.red);
             transform.LookAt(new Vector3(point.x, transform.position.y + hieght, point.z));
-            aimPoint.transform.position = point;
+           // aimPoint.transform.position = point;
         }
 
         //Quaternion newRot = transform.rotation;
