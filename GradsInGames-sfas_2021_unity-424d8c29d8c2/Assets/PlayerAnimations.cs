@@ -27,18 +27,20 @@ public class PlayerAnimations : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if(Input.GetKey(KeyCode.I))
+
+        if(Input.GetKey(KeyCode.T))
+        {
+            EquptGun(EGun.FlashLight);
+        }
+      else if(Input.GetKey(KeyCode.I))
         {
             if(currentGun != _Gun1)
             {
                 EquptGun(_Gun1);
-               // SetShotgun();
             }
             else if(currentGun != _Gun2)
-            {
-                
+            {                
                 EquptGun(_Gun2);
-              //  SetPistol();
             }
         }
     }
@@ -54,20 +56,9 @@ public class PlayerAnimations : MonoBehaviour
         Shotgun,
         Pistol,
         Rifle,
+        FlashLight,
         AmountOfGuns,
     }
- 
-    //public void SetPistol()
-    //{
-    //    _RightHand.data.target = _PistolRightHand.transform;
-    //    _LefttHand.data.target = _PistolLeftHand.transform;
-    //}
-
-    //public void SetShotgun()
-    //{
-    //    _RightHand.data.target = _ShotgunRightHand.transform;
-    //    _LefttHand.data.target = _ShotgunLeftHand.transform;
-    //}
 
     public void CurrentPistol()
     {
@@ -83,6 +74,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         currentGun = EGun.Rifle;
     }
+
     public void CurrentNoGun()
     {
         currentGun = EGun.NoGun;
