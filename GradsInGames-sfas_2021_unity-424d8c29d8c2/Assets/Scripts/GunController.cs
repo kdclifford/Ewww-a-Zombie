@@ -5,6 +5,7 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
     Rifle rifle = new Rifle();
+    Shotgun shotgun = new Shotgun();
     PlayerController playerController;
     public ParticleSystem particleSystem;
 
@@ -27,27 +28,14 @@ public class GunController : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.Space) && timer < 0)
         {
-            var bullet = Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
-            bullet.GetComponent<Rigidbody>().velocity = (playerController.point - transform.position).normalized * 100;
-            Shoot(ref bullet);
+            shotgun.Fire(particleSystem, tracer, playerController.point, layerMask);
             timer = rifle.fireRate;
         }
-        Debug.DrawRay(transform.position, (playerController.point - transform.position) * 10, Color.green);
+       // Debug.DrawRay(transform.position, (playerController.point - transform.position) * 10, Color.green);
 
         timer -= Time.deltaTime;
     }
 
-    void Shoot(ref GameObject tracer)
-    {
-        
 
-        particleSystem.Play();
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, playerController.point - transform.position, out hit, rifle.range, layerMask))
-        {
-            Debug.Log(hit.transform.name);
-            tracer.transform.Translate(Vector3.forward);
-        }
-    }
 
 }

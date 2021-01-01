@@ -10,16 +10,32 @@ public abstract class WeaponStats
     public float damage = 1;
     public float reloadSpeed;
     public float critChance = 1;
+    public float bulletSpeed = 10000;
     public EGun gunType = EGun.NoGun;
-    public abstract void Fire();
+    public abstract void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects);
 }
 
 public class Shotgun : WeaponStats
 {
     public int pellets = 6;
-    public override void Fire()
+    public float pelletSpread = 1.6f;
+    public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects)
     {
-      
+
+        for (int i = 0; i < pellets; i++)
+        {
+            var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
+            bullet.GetComponent<Rigidbody>().velocity = ((destination - particleSystem.transform.position) + 
+                (Random.insideUnitSphere * pelletSpread)).normalized * (bulletSpeed * Time.deltaTime);
+
+            particleSystem.Play();
+            RaycastHit hit;
+            if (Physics.Raycast(particleSystem.transform.position, destination - particleSystem.transform.position, out hit, range, hitObjects))
+            {
+                Debug.Log(hit.transform.name);
+                //tracer.transform.Translate(Vector3.forward);
+            }
+        }
 
     }
 }
@@ -37,9 +53,22 @@ public class Rifle : WeaponStats
         gunType = EGun.Rifle;
     }
 
-    public override void Fire()
+    public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects)
     {
+       
 
+
+            var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
+            bullet.GetComponent<Rigidbody>().velocity = (destination - particleSystem.transform.position).normalized * bulletSpeed;
+
+            particleSystem.Play();
+            RaycastHit hit;
+            if (Physics.Raycast(particleSystem.transform.position, destination - particleSystem.transform.position, out hit, range, hitObjects))
+            {
+                Debug.Log(hit.transform.name);
+                //tracer.transform.Translate(Vector3.forward);
+            }
+        
 
     }
 }
