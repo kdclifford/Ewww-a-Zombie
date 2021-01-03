@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Laptop
   - Lights
+  - Rifle
+  - Pistol
+  - Shotgun
   layers:
   - Default
   - TransparentFX

@@ -7,44 +7,36 @@ public class PlayerAnimations : MonoBehaviour
 {
 
     private Animator _GunPose;
-    public EGun currentGun = EGun.NoGun;
-    private EGun _Gun1 = EGun.Rifle;
-    private EGun _Gun2 = EGun.Pistol;
+    private GunManager gunManager;
 
-    //public GameObject _PistolRightHand;
-    //public GameObject _PistolLeftHand;
-    //public GameObject _ShotgunRightHand;
-    //public GameObject _ShotgunLeftHand;
-    //public TwoBoneIKConstraint _RightHand;
-    //public TwoBoneIKConstraint _LefttHand;
 
     // Start is called before the first frame update
-  
-        void Start()
-        {
-            _GunPose = GetComponent<Animator>();
-            _GunPose.enabled = false;
-            _GunPose.enabled = true;
-        }
-    
+
+    void Start()
+    {
+        gunManager = GunManager.Instance;
+        _GunPose = GetComponent<Animator>();
+        _GunPose.enabled = false;
+        _GunPose.enabled = true;
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-
-        if(Input.GetKey(KeyCode.T))
+        if (Input.GetKey(KeyCode.T))
         {
             EquptGun(EGun.FlashLight);
         }
-      else if(Input.GetKey(KeyCode.I))
+        else if (Input.GetKey(KeyCode.I))
         {
-            if(currentGun != _Gun1)
+            if (gunManager.currentGun != gunManager._Gun1)
             {
-                EquptGun(_Gun1);
+                EquptGun(gunManager._Gun1);
             }
-            else if(currentGun != _Gun2)
-            {                
-                EquptGun(_Gun2);
+            else if (gunManager.currentGun != gunManager._Gun2)
+            {
+                EquptGun(gunManager._Gun2);
             }
         }
     }
@@ -56,31 +48,36 @@ public class PlayerAnimations : MonoBehaviour
 
     public void CurrentPistol()
     {
-        currentGun = EGun.Pistol;
+        gunManager.currentGun = EGun.Pistol;
     }
 
     public void CurrentShotgun()
     {
-        currentGun = EGun.Shotgun;
+        gunManager.currentGun = EGun.Shotgun;
     }
 
     public void CurrentRifle()
     {
-        currentGun = EGun.Rifle;
+        gunManager.currentGun = EGun.Rifle;
+    }
+
+    public void CurrentFlashLight()
+    {
+        gunManager.currentGun = EGun.FlashLight;
     }
 
     public void CurrentNoGun()
     {
-        currentGun = EGun.NoGun;
+        gunManager.currentGun = EGun.NoGun;
     }
 }
 
 public enum EGun
 {
     NoGun = 0,
-    Shotgun,
-    Pistol,
-    Rifle,
-    FlashLight,
+    Shotgun = 1,
+    Pistol = 2,
+    Rifle = 3,
+    FlashLight = 4,
     AmountOfGuns,
 }
