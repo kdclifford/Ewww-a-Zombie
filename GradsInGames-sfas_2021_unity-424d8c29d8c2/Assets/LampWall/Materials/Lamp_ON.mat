@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Lamp_ON
   m_Shader: {fileID: 4800000, guid: 421adb0a0ce7ae7499c521b79f8d5b93, type: 3}
-  m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP
+  m_ShaderKeywords: USE_TEXTURE _EMISSION _METALLICGLOSSMAP
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -74,7 +74,7 @@ Material:
     - _SrcBlend: 1
     - _StencilRef: 1
     - _UVSec: 0
-    - _UseTexture: 0
+    - _UseTexture: 1
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

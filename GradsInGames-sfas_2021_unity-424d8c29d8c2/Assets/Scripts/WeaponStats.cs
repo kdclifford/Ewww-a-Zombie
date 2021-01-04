@@ -21,7 +21,7 @@ public abstract class WeaponStats
 
         particleSystem.Play();
         RaycastHit hit;
-        if (Physics.Raycast(particleSystem.transform.position, destination - particleSystem.transform.position, out hit, range, hitObjects))
+        if (Physics.Raycast(particleSystem.transform.position - particleSystem.transform.forward, destination - particleSystem.transform.position, out hit, range, hitObjects))
         {
             if (hit.distance < range)
             {

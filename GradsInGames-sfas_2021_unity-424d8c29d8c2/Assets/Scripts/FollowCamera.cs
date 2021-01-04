@@ -8,10 +8,14 @@ public class FollowCamera : MonoBehaviour
     Vector3 cameraRot;
     public float stencilHeight;
     public GameObject stencil;
+    private CameraMovement _CameraMovement;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _CameraMovement = GetComponent<CameraMovement>();
+        _CameraMovement.enabled = false;
+        _CameraMovement.enabled = true;
     }
 
     // Update is called once per frame
