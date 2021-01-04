@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     bool isGrounded;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -44,21 +44,45 @@ public class PlayerController : MonoBehaviour
         _Animator.SetFloat("Ymove", walkRot.y);
 
         //Get the Screen position of the mouse
-        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition );
         Plane ground = new Plane(Vector3.up, Vector3.zero);
 
-       // Debug.Log(Input.mousePosition);
+        // Debug.Log(Input.mousePosition);
 
-        float rayLength;
+        Vector3 newGunPos = transform.position;
+        newGunPos.y = transform.position.y + GunManager.Instance.currentlyEquipped.gunHeight;
 
-        if (ground.Raycast(cameraRay, out rayLength))
+        Plane groundPlane = new Plane(Vector3.up, newGunPos);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        float distance;
+        Vector3 axis = Vector3.zero;
+
+        if (groundPlane.Raycast(ray, out distance))
         {
-            point = cameraRay.GetPoint(rayLength);
-            //point.y = hieght;
-            Debug.DrawLine(cameraRay.origin, point, Color.red);
-            transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
-           // aimPoint.transform.position = point;
+            point = ray.GetPoint(distance);
+            axis = (point - newGunPos).normalized;
+            axis = new Vector3(axis.x, 0f, axis.z);
+            if (Vector3.Distance(point , newGunPos) > 0.5f)
+            {
+                transform.rotation = Quaternion.LookRotation(axis);
+            }
         }
+
+
+
+        //float rayLength;
+        //RaycastHit hit;
+        //if (Physics.Raycast(cameraRay, out hit, 1000, groundMask))
+        //{
+        //    point = hit.point;
+        //    //point.y = hieght;
+        //    Debug.DrawLine(cameraRay.origin, point - cameraRay.direction, Color.red);
+        //    if (Vector3.Distance(new Vector3(point.x, transform.position.y, point.z), transform.position) > 0.5f)
+        //    {
+        //        transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
+        //    }
+        //   // aimPoint.transform.position = point;
+        //}
 
         //Quaternion newRot = transform.rotation;
         //newRot.eulerAngles = new Vector3(0, transform.rotation.y, 0);
