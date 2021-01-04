@@ -41,12 +41,12 @@
 				o.Albedo = col.rgb;
 				o.Metallic = _Metallic;
 				o.Smoothness = _Smoothness;
-				if (_UseTexture == 1)
+				if (_UseTexture == 0)
 				{
 
-					//o.Emission = _EmissionColor;
+					o.Emission = _EmissionColor;
 				}
-				o.Emission = _EmissionColor;
+				//o.Emission = _EmissionColor;
 
 			}
 			ENDCG

@@ -40,10 +40,12 @@ public class ZombieAnimation : MonoBehaviour
         }
         else
         {
-            _NavMesh.ResetPath();
+            //_NavMesh.ResetPath();
             _Animator.SetFloat("Velocity", 0f);
             Destroy(_NavMesh);
-            Destroy(GetComponentInChildren<Collider>());
+            //Destroy(GetComponentInChildren<Collider>());            
+            Destroy(transform.Find("Base HumanPelvis").GetComponent<CapsuleCollider>());
+            Destroy(transform.GetChild(0).transform.GetChild(transform.childCount).gameObject);
             Destroy(this);
         }
     }

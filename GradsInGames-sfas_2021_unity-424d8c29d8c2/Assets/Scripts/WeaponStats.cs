@@ -13,7 +13,7 @@ public abstract class WeaponStats
     public float bulletSpeed = 3000;
     public EGun gunType = EGun.NoGun;
     public float gunHeight = 1.5f;
-    public abstract void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects);
+    public abstract void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects);
     public void Shoot(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects)
     {
         var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
@@ -38,10 +38,10 @@ public abstract class WeaponStats
         }
     }
 
-   public bool CritChance()
+    public bool CritChance()
     {
         int chance = Random.Range(0, 100);
-        if(chance <= critChance)
+        if (chance <= critChance)
         {
             Debug.Log("WOW CRIT");
             return true;
@@ -54,7 +54,7 @@ public abstract class WeaponStats
 public class Shotgun : WeaponStats
 {
     public int pellets = 6;
-    public float pelletSpread = 1f;
+    public float pelletSpread = 3.5f;
 
     public Shotgun()
     {
@@ -67,39 +67,60 @@ public class Shotgun : WeaponStats
         gunType = EGun.Shotgun;
     }
 
-    public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects)
+    public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects)
     {
 
         for (int i = 0; i < pellets; i++)
         {
             Vector3 offset = Random.insideUnitSphere;
             offset.y = destination.y;
-            //float distacne = Vector3.Distance(destination, particleSystem.transform.position);
-            //if(distacne < 0.5f)
-            //{
-            //    distacne = 1;
-            //}
-            //offset = offset * distacne;
+            Vector3 dir = Vector3.zero;
 
-            Vector3 direction = destination - particleSystem.transform.position;
-            direction = particleSystem.transform.position + (direction.normalized * 2);
-            offset = offset + direction;
-            destination.y = particleSystem.transform.position.y;
+            if (Vector3.Distance(destination, gunPos) > 1f)
+            {
+                Vector3 direction = destination - particleSystem.transform.position;
+                direction = particleSystem.transform.position + (direction.normalized * 2);
+                offset = offset + direction;
+                destination.y = particleSystem.transform.position.y;
 
-            
+
                 Vector3 bulletDir = offset - particleSystem.transform.position;
+                dir = bulletDir;
                 var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
                 bullet.GetComponent<Rigidbody>().velocity = (bulletDir).normalized * (bulletSpeed * Time.deltaTime);
+            }
+            else
+            {
+                offset.y = particleSystem.transform.forward.y;
+                dir = ( particleSystem.transform.forward + (offset + (particleSystem.transform.forward.normalized * 3)));
+                var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
+                bullet.GetComponent<Rigidbody>().velocity = dir.normalized * (bulletSpeed * Time.deltaTime);
+            }
 
-                particleSystem.Play();
-                RaycastHit hit;
-                if (Physics.Raycast(particleSystem.transform.position, bulletDir, out hit, range, hitObjects))
+            particleSystem.Play();
+
+            ShotgunDamage(dir.normalized, hitObjects, particleSystem.transform.position - particleSystem.transform.forward);
+
+        }
+
+    }
+
+    public void ShotgunDamage(Vector3 dir, LayerMask hitObjects, Vector3 origin)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(origin, dir, out hit, range, hitObjects))
+        {
+            if (hit.distance < range)
+            {
+                if (CritChance())
                 {
-                    if (hit.distance < range)
+                    hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(100);
+                }
+                else
+                {
+                    if ((int)hit.distance == 0)
                     {
-                    if (CritChance())
-                    {
-                        hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(100);
+                        hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
                     }
                     else
                     {
@@ -107,18 +128,16 @@ public class Shotgun : WeaponStats
                         //tracer.transform.Translate(Vector3.forward);
                         hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage / (int)hit.distance);
                     }
-                    }
                 }
-            
-       
+            }
         }
-
     }
+
 }
 
 public class Rifle : WeaponStats
 {
-  public  Rifle()
+    public Rifle()
     {
         fireRate = 0.3f;
         reloadSpeed = 1;
@@ -129,7 +148,7 @@ public class Rifle : WeaponStats
         gunType = EGun.Rifle;
     }
 
-    public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects)
+    public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects)
     {
         Shoot(particleSystem, tracer, destination, hitObjects);
     }
@@ -148,7 +167,7 @@ public class Pistol : WeaponStats
         gunType = EGun.Pistol;
     }
 
-    public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects)
+    public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects)
     {
         Shoot(particleSystem, tracer, destination, hitObjects);
     }
@@ -168,7 +187,7 @@ public class NoGun : WeaponStats
         gunType = EGun.NoGun;
     }
 
-    public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects)
+    public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects)
     {
     }
 }

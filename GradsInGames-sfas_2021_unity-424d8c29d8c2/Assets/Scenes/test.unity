@@ -200,10 +200,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robot Kyle hUMANOID
       objectReference: {fileID: 0}
-    - target: {fileID: 1207030562315612505, guid: c6cdc60c8d836ca459e75f7f7c25f928, type: 3}
-      propertyPath: layerMask.m_Bits
-      value: 12288
-      objectReference: {fileID: 0}
     - target: {fileID: 4558947563362518139, guid: c6cdc60c8d836ca459e75f7f7c25f928, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -247,14 +243,6 @@ PrefabInstance:
     - target: {fileID: 4558947563362518139, guid: c6cdc60c8d836ca459e75f7f7c25f928, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8808502562858865323, guid: c6cdc60c8d836ca459e75f7f7c25f928, type: 3}
-      propertyPath: _movementSpeed
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 8808502562858865323, guid: c6cdc60c8d836ca459e75f7f7c25f928, type: 3}
-      propertyPath: groundMask.m_Bits
-      value: 12288
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6cdc60c8d836ca459e75f7f7c25f928, type: 3}
@@ -686,7 +674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3305920991726709325, guid: d58be77cba3adf54cb14b15052b86514, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.1307812
+      value: 3.06
       objectReference: {fileID: 0}
     - target: {fileID: 3305920991726709325, guid: d58be77cba3adf54cb14b15052b86514, type: 3}
       propertyPath: m_LocalPosition.y
@@ -702,7 +690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3305920991726709325, guid: d58be77cba3adf54cb14b15052b86514, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 3305920991726709325, guid: d58be77cba3adf54cb14b15052b86514, type: 3}
       propertyPath: m_LocalRotation.z
@@ -710,7 +698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3305920991726709325, guid: d58be77cba3adf54cb14b15052b86514, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 3305920991726709325, guid: d58be77cba3adf54cb14b15052b86514, type: 3}
       propertyPath: m_RootOrder
@@ -722,7 +710,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3305920991726709325, guid: d58be77cba3adf54cb14b15052b86514, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3305920991726709325, guid: d58be77cba3adf54cb14b15052b86514, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

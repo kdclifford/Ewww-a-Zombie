@@ -5286,6 +5286,8 @@ GameObject:
   - component: {fileID: 1207030561919205867}
   - component: {fileID: 1207030562315612504}
   - component: {fileID: 1207030562315612505}
+  - component: {fileID: 1052089745}
+  - component: {fileID: 1052089746}
   m_Layer: 11
   m_Name: Robot Kyle hUMANOID
   m_TagString: Untagged
@@ -5336,13 +5338,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65df72d02dd485547a37eca8abfcc260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementSpeed: 0.1
+  _movementSpeed: 0.07
   point: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
-  groundDistance: 0.1
   groundMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 14336
 --- !u!95 &6665224815541967272
 Animator:
   serializedVersion: 3
@@ -5426,8 +5427,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 12288
   tracer: {fileID: 1756763340294552151, guid: ef9661e0a041c0448942aa23d0d52d0b, type: 3}
+--- !u!114 &1052089745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657520595114522216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3c3c7a8d007d624fa15d90a980a4155, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _MaxHealth: 100
+  _CurrentHealth: 0
+--- !u!114 &1052089746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657520595114522216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b688dc556c8ae1e419753494153f2c1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _MaxTimer: 3
 --- !u!1 &774406354681926914
 GameObject:
   m_ObjectHideFlags: 0

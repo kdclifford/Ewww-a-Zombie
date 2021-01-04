@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     float gravity = -9.81f;
 
     bool isGrounded;
-    public float groundDistance = 0.4f;
+   // public float groundDistance = 0.4f;
     public LayerMask groundMask;
     
     // Start is called before the first frame update
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(transform.position, groundDistance, ~groundMask);
+       // isGrounded = Physics.CheckSphere(transform.position, groundDistance, ~groundMask);
 
         if(isGrounded && velocity.y < 0)
         {
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
         //transform.rotation = newRot;
        // _RB.angularVelocity = Vector3.zero;
 
-        move = move.normalized * _movementSpeed;
+        move = move.normalized * (_movementSpeed * Time.deltaTime);
 
         //_RB.MovePosition(transform.position + Time.deltaTime * _movementSpeed * transform.TransformDirection(move));
         // _RB.velocity = move;
@@ -161,4 +161,5 @@ public class PlayerController : MonoBehaviour
 
         return input;
     }
+
 }

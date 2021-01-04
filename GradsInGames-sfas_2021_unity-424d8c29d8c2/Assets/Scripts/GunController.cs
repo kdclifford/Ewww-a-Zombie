@@ -31,14 +31,14 @@ public class GunController : MonoBehaviour
         {
             Vector3 newGunPos = transform.position;
             newGunPos.y = transform.position.y + gunManager.currentlyEquipped.gunHeight;
-            if (Vector3.Distance(newGunPos, playerController.point) > 0.7f)
+            if (Vector3.Distance(newGunPos, playerController.point) > 0.7f || gunManager.currentGun == EGun.Shotgun)
             {
-                gunManager.currentlyEquipped.Fire(gunManager.particleSystem, tracer, playerController.point, layerMask);
+                gunManager.currentlyEquipped.Fire(gunManager.particleSystem, tracer, playerController.point, newGunPos, layerMask);
                 timer = gunManager.currentlyEquipped.fireRate;
             }
             else
             {
-                gunManager.currentlyEquipped.Fire(gunManager.particleSystem, tracer, gunManager.particleSystem.transform.forward, layerMask);
+                gunManager.currentlyEquipped.Fire(gunManager.particleSystem, tracer, gunManager.particleSystem.transform.forward, newGunPos, layerMask);
                 timer = gunManager.currentlyEquipped.fireRate;
             }
         }
