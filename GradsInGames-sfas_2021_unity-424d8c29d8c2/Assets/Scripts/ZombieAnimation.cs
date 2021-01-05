@@ -9,6 +9,7 @@ public class ZombieAnimation : MonoBehaviour
     private Animator _Animator;
     public GameObject target;
     private Health _Health;
+    private float _Timer = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class ZombieAnimation : MonoBehaviour
     {
         if (_Health._CurrentHealth > 0)
         {
+            _Animator.SetInteger("Attack", 0);
             if (_NavMesh.destination != target.transform.position)
             {
                 _NavMesh.SetDestination(target.transform.position);
@@ -35,7 +37,7 @@ public class ZombieAnimation : MonoBehaviour
             }
             else
             {
-                _Animator.Play("Z_Attack");
+                _Animator.SetInteger("Attack", 1);
             }
         }
         else
@@ -48,5 +50,18 @@ public class ZombieAnimation : MonoBehaviour
             transform.Find("Base HumanPelvis").Find("CollisionBox").gameObject.SetActive(false);
             Destroy(this);
         }
+
+        if(_Timer <= 0)
+        {
+            int random = Random.Range(0, 5);
+            if(random == 1)
+            {
+                SoundManager.instance.Play(ESoundClipEnum.ZombieGrowl, gameObject);
+            }
+            _Timer = 5f;
+        }
+
+
+        _Timer -= Time.deltaTime;
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class DestroyProjectile : MonoBehaviour
 {
     Rigidbody _RB;
+   public LayerMask[] hitLayers;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,4 +22,17 @@ public class DestroyProjectile : MonoBehaviour
         }
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //foreach (LayerMask mask in hitLayers)
+        
+            if (other.gameObject.layer != 11 && other.gameObject.layer != 12 && other.gameObject.layer != 15)
+            {
+                Debug.Log(other.name);
+                Destroy(gameObject);
+            }
+        
+    }
+
 }

@@ -18,6 +18,7 @@ public abstract class WeaponStats
     public abstract void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects);
     public void Shoot(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects)
     {
+        
         var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
         bullet.GetComponent<Rigidbody>().velocity = ((destination - particleSystem.transform.position)).normalized * (bulletSpeed * Time.deltaTime);
 
@@ -74,6 +75,7 @@ public class Shotgun : WeaponStats
     {
         if (currentMagazine > 0)
         {
+        SoundManager.instance.PlayOnceAtPoint(ESoundClipEnum.Gun3Cut, particleSystem.gameObject);
             for (int i = 0; i < pellets; i++)
             {
                 Vector3 offset = Random.insideUnitSphere;
@@ -158,6 +160,7 @@ public class Rifle : WeaponStats
     {
         if (currentMagazine > 0)
         {
+            SoundManager.instance.PlayOnceAtPoint(ESoundClipEnum.Gun1Cut, particleSystem.gameObject);
             Shoot(particleSystem, tracer, destination, hitObjects);
             currentMagazine--;
         }
@@ -182,6 +185,7 @@ public class Pistol : WeaponStats
     {
         if (currentMagazine > 0)
         {
+            SoundManager.instance.PlayOnceAtPoint(ESoundClipEnum.Gun4Cut, particleSystem.gameObject);
             Shoot(particleSystem, tracer, destination, hitObjects);
             currentMagazine--;            
         }
