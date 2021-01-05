@@ -5,14 +5,16 @@ using UnityEngine;
 public abstract class WeaponStats
 {
     public float fireRate = 1;
-    public float magazineMAx = 0;
+    public int magazineMAx = 0;
+    public int currentMagazine = 0;
     public float range = 1;
     public int damage = 1;
-    public float reloadSpeed;
+    public float reloadSpeed = 0;
     public float critChance = 1;
-    public float bulletSpeed = 3000;
+    public float bulletSpeed = 1000;
     public EGun gunType = EGun.NoGun;
     public float gunHeight = 1.5f;
+
     public abstract void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects);
     public void Shoot(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects)
     {
@@ -62,47 +64,50 @@ public class Shotgun : WeaponStats
         reloadSpeed = 1;
         damage = 25;
         critChance = 5;
-        magazineMAx = 30;
+        magazineMAx = 6;
+        currentMagazine = magazineMAx;
         range = 3;
         gunType = EGun.Shotgun;
     }
 
     public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects)
     {
-
-        for (int i = 0; i < pellets; i++)
+        if (currentMagazine > 0)
         {
-            Vector3 offset = Random.insideUnitSphere;
-            offset.y = destination.y;
-            Vector3 dir = Vector3.zero;
-
-            if (Vector3.Distance(destination, gunPos) > 1f)
+            for (int i = 0; i < pellets; i++)
             {
-                Vector3 direction = destination - particleSystem.transform.position;
-                direction = particleSystem.transform.position + (direction.normalized * 2);
-                offset = offset + direction;
-                destination.y = particleSystem.transform.position.y;
+                Vector3 offset = Random.insideUnitSphere;
+                offset.y = destination.y;
+                Vector3 dir = Vector3.zero;
+
+                if (Vector3.Distance(destination, gunPos) > 1f)
+                {
+                    Vector3 direction = destination - particleSystem.transform.position;
+                    direction = particleSystem.transform.position + (direction.normalized * 2);
+                    offset = offset + direction;
+                    destination.y = particleSystem.transform.position.y;
 
 
-                Vector3 bulletDir = offset - particleSystem.transform.position;
-                dir = bulletDir;
-                var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
-                bullet.GetComponent<Rigidbody>().velocity = (bulletDir).normalized * (bulletSpeed * Time.deltaTime);
+                    Vector3 bulletDir = offset - particleSystem.transform.position;
+                    dir = bulletDir;
+                    var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
+                    bullet.GetComponent<Rigidbody>().velocity = (bulletDir).normalized * (bulletSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    offset.y = particleSystem.transform.forward.y;
+                    dir = (particleSystem.transform.forward + (offset + (particleSystem.transform.forward.normalized * 3)));
+                    var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
+                    bullet.GetComponent<Rigidbody>().velocity = dir.normalized * (bulletSpeed * Time.deltaTime);
+                }
+
+                particleSystem.Play();
+
+                ShotgunDamage(dir.normalized, hitObjects, particleSystem.transform.position - particleSystem.transform.forward);
+
             }
-            else
-            {
-                offset.y = particleSystem.transform.forward.y;
-                dir = ( particleSystem.transform.forward + (offset + (particleSystem.transform.forward.normalized * 3)));
-                var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
-                bullet.GetComponent<Rigidbody>().velocity = dir.normalized * (bulletSpeed * Time.deltaTime);
-            }
-
-            particleSystem.Play();
-
-            ShotgunDamage(dir.normalized, hitObjects, particleSystem.transform.position - particleSystem.transform.forward);
-
+            currentMagazine--;
         }
-
     }
 
     public void ShotgunDamage(Vector3 dir, LayerMask hitObjects, Vector3 origin)
@@ -144,13 +149,18 @@ public class Rifle : WeaponStats
         damage = 15;
         critChance = 5;
         magazineMAx = 30;
+        currentMagazine = magazineMAx;
         range = 20;
         gunType = EGun.Rifle;
     }
 
     public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects)
     {
-        Shoot(particleSystem, tracer, destination, hitObjects);
+        if (currentMagazine > 0)
+        {
+            Shoot(particleSystem, tracer, destination, hitObjects);
+            currentMagazine--;
+        }
     }
 }
 
@@ -163,13 +173,18 @@ public class Pistol : WeaponStats
         damage = 10;
         critChance = 10;
         magazineMAx = 15;
+        currentMagazine = magazineMAx;
         range = 15;
         gunType = EGun.Pistol;
     }
 
     public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects)
     {
-        Shoot(particleSystem, tracer, destination, hitObjects);
+        if (currentMagazine > 0)
+        {
+            Shoot(particleSystem, tracer, destination, hitObjects);
+            currentMagazine--;            
+        }
     }
 }
 

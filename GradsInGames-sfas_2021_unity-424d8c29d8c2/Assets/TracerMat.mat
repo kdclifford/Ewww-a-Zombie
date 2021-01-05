@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: TracerMat
   m_Shader: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHABLEND_ON _FADING_ON _REQUIRE_UV2
+  m_ShaderKeywords: _ALPHABLEND_ON _EMISSION _FADING_ON _REQUIRE_UV2
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -73,7 +73,7 @@ Material:
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0
     - _DstBlend: 1
-    - _EmissionEnabled: 0
+    - _EmissionEnabled: 1
     - _FlipbookMode: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
@@ -100,9 +100,9 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0, g: 5.4033303, b: 3.8013217, a: 0.8784314}
+    - _Color: {r: 2.2931936, g: 2.2931936, b: 2.2931936, a: 0.8784314}
     - _ColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 0.39641356, g: 0, b: 0.61714387, a: 1}
+    - _EmissionColor: {r: 0.6156863, g: 0.15729675, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0.1, b: 0, a: 0}
     - _TintColor: {r: 0, g: 0.8867924, b: 0.8019693, a: 0.5}
   m_BuildTextureStacks: []

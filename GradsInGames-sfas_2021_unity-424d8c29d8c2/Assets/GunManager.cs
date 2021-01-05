@@ -34,6 +34,9 @@ public class GunManager : MonoBehaviour
     [HideInInspector]
     public ParticleSystem particleSystem;
 
+    public int _MAXAmmoReserves = 300;
+    public int _AmmoReserves = 300;
+
     // Start is called before the first frame update
     void Start()
     {

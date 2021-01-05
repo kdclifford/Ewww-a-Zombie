@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     bool isGrounded;
    // public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,50 +68,21 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
-
-        //float rayLength;
-        //RaycastHit hit;
-        //if (Physics.Raycast(cameraRay, out hit, 1000, groundMask))
-        //{
-        //    point = hit.point;
-        //    //point.y = hieght;
-        //    Debug.DrawLine(cameraRay.origin, point - cameraRay.direction, Color.red);
-        //    if (Vector3.Distance(new Vector3(point.x, transform.position.y, point.z), transform.position) > 0.5f)
-        //    {
-        //        transform.LookAt(new Vector3(point.x, transform.position.y, point.z));
-        //    }
-        //   // aimPoint.transform.position = point;
-        //}
-
-        //Quaternion newRot = transform.rotation;
-        //newRot.eulerAngles = new Vector3(0, transform.rotation.y, 0);
-        //transform.rotation = newRot;
-       // _RB.angularVelocity = Vector3.zero;
-
         move = move.normalized * (_movementSpeed * Time.deltaTime);
 
-        //_RB.MovePosition(transform.position + Time.deltaTime * _movementSpeed * transform.TransformDirection(move));
-        // _RB.velocity = move;
 
         controller.Move(move);
 
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+      
+
+
     }
 
-    //private void FixedUpdate()
-    //{
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(transform.position, Vector3.down + transform.position, out hit, 1))
-    //    {
-    //        if (hit.transform.gameObject.layer == LayerMask.GetMask("Stair"))
-    //        {
-    //            _RB.velocity = new Vector3(_RB.velocity.x, 0, _RB.velocity.z);
-    //        }
-    //    }
-    //}
+
 
 
     public static Vector2 CurrentDirection(Vector2 input, GameObject agent)
