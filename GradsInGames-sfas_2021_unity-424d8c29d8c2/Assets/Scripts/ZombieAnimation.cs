@@ -10,6 +10,8 @@ public class ZombieAnimation : MonoBehaviour
     public GameObject target;
     private Health _Health;
     private float _Timer = 3;
+    private float targetDistance = 0;
+    private float targetNewDistance = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +27,12 @@ public class ZombieAnimation : MonoBehaviour
     {
         if (_Health._CurrentHealth > 0)
         {
+            targetDistance = targetNewDistance;
+            targetNewDistance = Vector3.Distance(_NavMesh.destination, transform.position);
+            Debug.Log(targetNewDistance);
+
             _Animator.SetInteger("Attack", 0);
-            if (_NavMesh.destination != target.transform.position)
+            if (targetNewDistance >= 0.1f)
             {
                 _NavMesh.SetDestination(target.transform.position);
             }
