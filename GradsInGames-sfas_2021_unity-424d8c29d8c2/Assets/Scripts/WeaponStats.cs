@@ -37,6 +37,7 @@ public abstract class WeaponStats
                 {
                     hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
                 }
+                HitColour(hit.collider.gameObject);
             }
         }
     }
@@ -50,6 +51,11 @@ public abstract class WeaponStats
             return true;
         }
         return false;
+    }
+
+    public void HitColour(GameObject agent)
+    {
+        agent.transform.parent.GetComponent<Animator>().SetTrigger("Colour");
     }
 
 }
@@ -136,6 +142,7 @@ public class Shotgun : WeaponStats
                         hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage / (int)hit.distance);
                     }
                 }
+                HitColour(hit.collider.gameObject);
             }
         }
     }
