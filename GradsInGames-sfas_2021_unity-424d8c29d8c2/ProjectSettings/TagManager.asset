@@ -10,6 +10,7 @@ TagManager:
   - Pistol
   - Shotgun
   - SoundManager
+  - LightBulb
   layers:
   - Default
   - TransparentFX

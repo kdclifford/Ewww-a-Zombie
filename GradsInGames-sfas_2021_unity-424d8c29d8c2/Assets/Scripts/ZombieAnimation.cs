@@ -29,7 +29,7 @@ public class ZombieAnimation : MonoBehaviour
         {
             targetDistance = targetNewDistance;
             targetNewDistance = Vector3.Distance(_NavMesh.destination, transform.position);
-            Debug.Log(targetNewDistance);
+            //Debug.Log(targetNewDistance);
 
             _Animator.SetInteger("Attack", 0);
             if (targetNewDistance >= 0.1f)
