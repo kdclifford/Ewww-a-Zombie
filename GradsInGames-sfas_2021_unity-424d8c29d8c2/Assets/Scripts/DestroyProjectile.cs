@@ -29,7 +29,7 @@ public class DestroyProjectile : MonoBehaviour
         
             if (other.gameObject.layer != 11 && other.gameObject.layer != 12 && other.gameObject.layer != 15)
             {
-                Debug.Log(other.name);
+               // Debug.Log(other.name);
                 Destroy(gameObject);
             }
         

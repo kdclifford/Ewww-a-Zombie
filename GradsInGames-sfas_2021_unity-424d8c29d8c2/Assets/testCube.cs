@@ -5,7 +5,7 @@ using UnityEngine;
 public class testCube : MonoBehaviour
 {
     EAgentPos agentPos;
-    public GameObject cube;
+    public SkinnedMeshRenderer cube;
     private PlayerCurrentLocation playerPos;
 
     // Start is called before the first frame update
@@ -17,7 +17,7 @@ public class testCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y > -2.5f)
+        if (transform.position.y > -2.4f)
         {
             agentPos = EAgentPos.Upstairs;
         }
@@ -28,11 +28,11 @@ public class testCube : MonoBehaviour
 
         if(agentPos != playerPos.playerPos)
         {
-            cube.SetActive(false);
+            cube.enabled = (false);
         }
         else
         {
-            cube.SetActive(true);
+            cube.enabled = (true);
         }
 
 

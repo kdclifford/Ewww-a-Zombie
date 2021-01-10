@@ -12,6 +12,11 @@ public class ZombieAnimation : MonoBehaviour
     private float _Timer = 3;
     private float targetDistance = 0;
     private float targetNewDistance = 0;
+    private float minSpeed = 0.25f;
+    private float maxSpeed = 3.5f;
+    private float currentSpeed = 0;
+    public float speedOffset;
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +26,15 @@ public class ZombieAnimation : MonoBehaviour
         _Animator = GetComponent<Animator>();
         _NavMesh.SetDestination(target.transform.position);
         _Health = GetComponent<Health>();
+        currentSpeed = minSpeed + (maxSpeed - minSpeed) * (SpawnManager.instance.currentRound * 0.1f);
+        _NavMesh.speed = Mathf.Lerp(minSpeed, maxSpeed, (SpawnManager.instance.currentRound - 1) * 0.1f);
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        //Debug.Log(_NavMesh.velocity.normalized);
         if (_Health._CurrentHealth > 0)
         {
             targetDistance = targetNewDistance;
@@ -40,7 +49,14 @@ public class ZombieAnimation : MonoBehaviour
 
             if (Vector3.Distance(transform.position, target.transform.position) > 1.51f)
             {
-                _Animator.SetFloat("Velocity", Mathf.Abs(_NavMesh.velocity.x) + Mathf.Abs(_NavMesh.velocity.z));
+                if (SpawnManager.instance.currentRound < 10)
+                {
+                    _Animator.SetFloat("Velocity", Mathf.Lerp(0.25f, 3.5f, (SpawnManager.instance.currentRound - 1) * 0.1f));
+                }
+                else
+                {
+                    _Animator.SetFloat("Velocity", 1);
+                }
             }
             else
             {

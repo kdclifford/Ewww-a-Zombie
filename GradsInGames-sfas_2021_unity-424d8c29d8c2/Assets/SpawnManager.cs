@@ -63,13 +63,14 @@ public class SpawnManager : MonoBehaviour
     {
         for (int i = 0; i < currentZombieAmount; i++)
         {
-            int rand = Random.Range(0, _Rooms.Length);
-            GameObject zombie = MonoBehaviour.Instantiate(zombiePrefab, _Rooms[rand].transform.position , Quaternion.identity);
-            currentlySpawned++;
             if(currentlySpawned == maxAmountOnMap || currentlySpawned == currentZombieAmount)
             {
                 break;
             }
+            Debug.Log("Zombie Spawned");
+            int rand = Random.Range(0, _Rooms.Length);
+            GameObject zombie = MonoBehaviour.Instantiate(zombiePrefab, _Rooms[rand].transform.position , Quaternion.identity);
+            currentlySpawned++;
 
         }
     }
