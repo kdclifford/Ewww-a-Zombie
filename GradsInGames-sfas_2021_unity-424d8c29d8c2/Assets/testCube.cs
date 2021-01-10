@@ -6,12 +6,12 @@ public class testCube : MonoBehaviour
 {
     EAgentPos agentPos;
     public GameObject cube;
-    public PlayerCurrentLocation playerPos;
+    private PlayerCurrentLocation playerPos;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerPos = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayerCurrentLocation>();
     }
 
     // Update is called once per frame

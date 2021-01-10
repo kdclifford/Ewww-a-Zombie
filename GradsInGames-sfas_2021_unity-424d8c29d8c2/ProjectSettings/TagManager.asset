@@ -11,6 +11,8 @@ TagManager:
   - Shotgun
   - SoundManager
   - LightBulb
+  - Room
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -29,8 +31,8 @@ TagManager:
   - HitBox
   - EnemyCollider
   - Bullet
-  - 
-  - 
+  - PlayerIgnore
+  - EnemyIgnore
   - 
   - 
   - 

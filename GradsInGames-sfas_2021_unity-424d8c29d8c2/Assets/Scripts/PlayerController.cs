@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour
     bool isGrounded;
    // public float groundDistance = 0.4f;
     public LayerMask groundMask;
+    private GameObject gameManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
         //_RB = GetComponent<Rigidbody>();
         _Animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
+        gameManager = GameObject.FindGameObjectWithTag("GameManager");
     }
 
     // Update is called once per frame
@@ -36,6 +40,9 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = -0.1f;
         }
+
+      
+        //transform.position = transform.position;
 
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         Vector2 walkRot = CurrentDirection(new Vector2(move.x, move.z), gameObject);
@@ -77,8 +84,16 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime);
 
-      
+        controller.enableOverlapRecovery = false;
+        if (transform.position.y > -0.36f && gameManager.GetComponent<PlayerCurrentLocation>().playerPos == EAgentPos.Upstairs)
+        {
+            transform.position = new Vector3(transform.position.x, -0.36f, transform.position.z);
+        }
 
+        //if (transform.position.y > -3.16 && gameManager.GetComponent<PlayerCurrentLocation>().playerPos == EAgentPos.Downstairs)
+        //{
+        //    transform.position = new Vector3(transform.position.x, -3.16f, transform.position.z);
+        //}
 
     }
 
@@ -132,5 +147,15 @@ public class PlayerController : MonoBehaviour
 
         return input;
     }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.gameObject.layer == LayerMask.GetMask("Enemy"))
+        {
+            hit.gameObject.GetComponent<NavMeshAgent>().velocity = Vector3.zero;            
+        }
+    }
+
+
 
 }

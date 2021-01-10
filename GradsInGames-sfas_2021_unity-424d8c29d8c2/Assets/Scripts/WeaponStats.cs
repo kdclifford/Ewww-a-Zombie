@@ -69,11 +69,11 @@ public class Shotgun : WeaponStats
     {
         fireRate = 0.7f;
         reloadSpeed = 1;
-        damage = 25;
+        damage = 35;
         critChance = 5;
         magazineMAx = 6;
         currentMagazine = magazineMAx;
-        range = 3;
+        range = 7;
         gunType = EGun.Shotgun;
     }
 
@@ -99,15 +99,18 @@ public class Shotgun : WeaponStats
                     Vector3 bulletDir = offset - particleSystem.transform.position;
                     dir = bulletDir;
                     var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
-                    bullet.GetComponent<Rigidbody>().velocity = (bulletDir).normalized * (bulletSpeed * Time.deltaTime);
+                    bullet.GetComponent<Rigidbody>().velocity = (destination - bulletDir).normalized * (bulletSpeed * Time.deltaTime);
+                    //bullet.GetComponent<Rigidbody>().velocity = ((destination - particleSystem.transform.position)).normalized * (bulletSpeed * Time.deltaTime);
                 }
                 else
                 {
                     offset.y = particleSystem.transform.forward.y;
                     dir = (particleSystem.transform.forward + (offset + (particleSystem.transform.forward.normalized * 3)));
                     var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
-                    bullet.GetComponent<Rigidbody>().velocity = dir.normalized * (bulletSpeed * Time.deltaTime);
+                    bullet.GetComponent<Rigidbody>().velocity = (destination - dir).normalized * (bulletSpeed * Time.deltaTime);
+                   // bullet.GetComponent<Rigidbody>().velocity = ((destination - particleSystem.transform.position)).normalized * (bulletSpeed * Time.deltaTime);
                 }
+
 
                 particleSystem.Play();
 
@@ -180,7 +183,7 @@ public class Pistol : WeaponStats
     {
         fireRate = 0.5f;
         reloadSpeed = 1;
-        damage = 10;
+        damage = 34;
         critChance = 10;
         magazineMAx = 15;
         currentMagazine = magazineMAx;

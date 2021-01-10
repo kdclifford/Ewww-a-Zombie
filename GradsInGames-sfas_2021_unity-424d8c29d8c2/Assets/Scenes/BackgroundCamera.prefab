@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3365915885511583210}
   - component: {fileID: 3365915885511583221}
   - component: {fileID: 3365915885511583214}
-  - component: {fileID: 3365915885511583215}
   - component: {fileID: 3365915885511583209}
   m_Layer: 8
   m_Name: BackgroundCamera
@@ -117,20 +116,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _CamPos: {x: 3.900072, y: 11.998981, z: -10.798861}
   _CamRot: {x: 46.88763, y: -0.0008583068, z: 0}
---- !u!114 &3365915885511583215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3365915885511583220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39ad81794607a8a4998272f4f4ae5910, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stencilHeight: 9
-  stencil: {fileID: 0}
 --- !u!95 &3365915885511583209
 Animator:
   serializedVersion: 3

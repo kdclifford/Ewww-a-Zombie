@@ -9,7 +9,7 @@ public class LowPowerTimer : MonoBehaviour
     private float _Timer = 0;
     private TMP_Text _timerText;
     private Animator _laptopAnimatior;
-    public Animator _CameraAnim;
+    //public Animator _CameraAnim;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class LowPowerTimer : MonoBehaviour
     void Start()
     {
         _Timer = startTime;
-        _CameraAnim = Camera.main.GetComponent<Animator>();
+       // _CameraAnim = Camera.main.GetComponent<Animator>();
         LightManager.instance.SetLightsOff();
     }
 
@@ -48,7 +48,7 @@ public class LowPowerTimer : MonoBehaviour
         if (_Timer <= 0)
         {
             PlayLaptopAnimation();
-            CameraZoom();
+            //CameraZoom();
         }
     }
 
@@ -64,10 +64,10 @@ public class LowPowerTimer : MonoBehaviour
 
 
 
-    void CameraZoom()
-    {
-        _CameraAnim.SetTrigger("CameraZoomOut");
-    }
+    //void CameraZoom()
+    //{
+    //    _CameraAnim.SetTrigger("CameraZoomOut");
+    //}
 
     //void LightsOn()
     //{

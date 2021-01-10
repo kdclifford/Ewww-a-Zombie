@@ -7,7 +7,7 @@ public class ZombieAnimation : MonoBehaviour
 {
     private NavMeshAgent _NavMesh;
     private Animator _Animator;
-    public GameObject target;
+    private GameObject target;
     private Health _Health;
     private float _Timer = 3;
     private float targetDistance = 0;
@@ -16,6 +16,7 @@ public class ZombieAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        target = GameObject.FindGameObjectWithTag("Player");
         _NavMesh = GetComponent<NavMeshAgent>();
         _Animator = GetComponent<Animator>();
         _NavMesh.SetDestination(target.transform.position);
@@ -54,6 +55,7 @@ public class ZombieAnimation : MonoBehaviour
             ////Destroy(GetComponentInChildren<Collider>());            
             Destroy(transform.Find("Base HumanPelvis").GetComponent<CapsuleCollider>());
             transform.Find("Base HumanPelvis").Find("CollisionBox").gameObject.SetActive(false);
+            SpawnManager.instance.ZombieDied();
             Destroy(this);
         }
 
