@@ -13,6 +13,7 @@ TagManager:
   - LightBulb
   - Room
   - GameManager
+  - Invisible
   layers:
   - Default
   - TransparentFX

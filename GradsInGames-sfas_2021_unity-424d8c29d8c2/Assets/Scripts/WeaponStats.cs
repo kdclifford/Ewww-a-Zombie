@@ -26,18 +26,21 @@ public abstract class WeaponStats
         RaycastHit hit;
         if (Physics.Raycast(particleSystem.transform.position - particleSystem.transform.forward, destination - particleSystem.transform.position, out hit, range, hitObjects))
         {
-            if (hit.distance < range)
+            if (hit.collider.gameObject.tag != "Invisible")
             {
-                //tracer.transform.Translate(Vector3.forward);
-                if (CritChance())
+                if (hit.distance < range)
                 {
-                    hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(100);
+                    //tracer.transform.Translate(Vector3.forward);
+                    if (CritChance())
+                    {
+                        hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(100);
+                    }
+                    else
+                    {
+                        hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
+                    }
+                    HitColour(hit.collider.gameObject);
                 }
-                else
-                {
-                    hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
-                }
-                HitColour(hit.collider.gameObject);
             }
         }
     }
@@ -126,26 +129,29 @@ public class Shotgun : WeaponStats
         RaycastHit hit;
         if (Physics.Raycast(origin, dir, out hit, range, hitObjects))
         {
-            if (hit.distance < range)
+            if (hit.collider.gameObject.tag != "Invisible")
             {
-                if (CritChance())
+                if (hit.distance < range)
                 {
-                    hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(100);
-                }
-                else
-                {
-                    if ((int)hit.distance == 0)
+                    if (CritChance())
                     {
-                        hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
+                        hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(100);
                     }
                     else
                     {
-                        Debug.Log(hit.distance);
-                        //tracer.transform.Translate(Vector3.forward);
-                        hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage / (int)hit.distance);
+                        if ((int)hit.distance == 0)
+                        {
+                            hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
+                        }
+                        else
+                        {
+                            Debug.Log(hit.distance);
+                            //tracer.transform.Translate(Vector3.forward);
+                            hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage / (int)hit.distance);
+                        }
                     }
+                    HitColour(hit.collider.gameObject);
                 }
-                HitColour(hit.collider.gameObject);
             }
         }
     }

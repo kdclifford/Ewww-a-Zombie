@@ -815,7 +815,7 @@ GameObject:
   - component: {fileID: 4688618740363423661}
   m_Layer: 12
   m_Name: Invisible Zombie
-  m_TagString: Untagged
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1490,7 +1490,7 @@ GameObject:
   - component: {fileID: 138541902295998597}
   m_Layer: 12
   m_Name: Base HumanPelvis
-  m_TagString: Untagged
+  m_TagString: Invisible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

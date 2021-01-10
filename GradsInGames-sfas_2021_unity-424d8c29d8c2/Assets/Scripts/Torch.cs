@@ -4,30 +4,59 @@ using UnityEngine;
 
 public class Torch : MonoBehaviour
 {
+    public LayerMask mask;
+    public float rayHeight = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 forward = transform.forward;
-        forward.y = 0;
-        Debug.DrawRay(transform.position, forward, Color.green);
-
-        Quaternion rot = Quaternion.AngleAxis(45, Vector3.right);
-        Vector3 world = transform.TransformDirection( rot * Vector3.forward);
 
 
-        //Debug.Log(GetAngle(transform.position, 45f));
+        Quaternion startingAngle = Quaternion.AngleAxis(-45, Vector3.up);
+        Quaternion stepAngle = Quaternion.AngleAxis(5, Vector3.up);
 
-        Debug.DrawRay(transform.position, transform.TransformDirection(GetAngle(transform.position, 45f)), Color.red);
-        Debug.DrawRay(transform.position, transform.TransformDirection(GetAngle(transform.position, -45f)), Color.red);
+        if (GunManager.Instance.currentGun == EGun.FlashLight)
+        {
+            DetectThings(startingAngle, stepAngle);
+        }
+        
     }
 
-      public Vector3 GetAngle(Vector3 origin, float angle)
+    void DetectThings(Quaternion start, Quaternion step)
+    {
+        RaycastHit hit;
+        var angle = transform.rotation * start;
+        var pos = transform.position;
+        pos.y += rayHeight;
+        var direction = angle * Vector3.forward;
+        for (var i = 0; i < 24; i++)
+        {
+            Debug.DrawRay(pos, direction * 5, Color.red);
+            if (Physics.Raycast(pos, direction, out hit, 5, mask))
+            {
+                if (hit.collider.gameObject.tag == "Invisible")
+                {
+                    Debug.Log("Visible");
+                    //Enemy was seen
+                    hit.collider.gameObject.GetComponent<CapsuleCollider>().enabled = true;
+                    hit.collider.gameObject.transform.parent.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+                    hit.collider.gameObject.tag = "Untagged";
+                }
+
+            }
+            direction = step * direction;
+        }
+
+
+    }
+
+    public Vector3 GetAngle(Vector3 origin, float angle)
     {
         return new Vector3(Mathf.Sin(Mathf.Deg2Rad * angle), 0, Mathf.Cos(Mathf.Deg2Rad * angle));
     }
