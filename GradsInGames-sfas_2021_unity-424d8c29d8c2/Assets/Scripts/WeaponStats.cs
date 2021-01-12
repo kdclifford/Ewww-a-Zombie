@@ -16,9 +16,10 @@ public abstract class WeaponStats
     public float gunHeight = 1.5f;
 
     public abstract void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects);
+    public abstract void RandomStats();
     public void Shoot(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, LayerMask hitObjects)
     {
-        
+
         var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
         bullet.GetComponent<Rigidbody>().velocity = ((destination - particleSystem.transform.position)).normalized * (bulletSpeed * Time.deltaTime);
 
@@ -80,38 +81,59 @@ public class Shotgun : WeaponStats
         gunType = EGun.Shotgun;
     }
 
+    public override void RandomStats()
+    {
+        fireRate = Random.Range(0.4f, 1.5f);
+        reloadSpeed = Random.Range(0.5f, 2);
+        damage = Random.Range(25, 50);
+        critChance = Random.Range(4, 7);
+        magazineMAx = Random.Range(1, 8);
+        currentMagazine = magazineMAx;
+        range = Random.Range(5, 10);
+        pellets = Random.Range(4, 8);
+        pelletSpread = Random.Range(1.5f, 4f);
+
+
+
+    }
+
+
     public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects)
     {
         if (currentMagazine > 0)
         {
-        SoundManager.instance.PlayOnceAtPoint(ESoundClipEnum.Gun3Cut, particleSystem.gameObject);
+            SoundManager.instance.PlayOnceAtPoint(ESoundClipEnum.Gun3Cut, particleSystem.gameObject);
             for (int i = 0; i < pellets; i++)
             {
                 Vector3 offset = Random.insideUnitSphere;
-                offset.y = destination.y;
+                offset.y = 0;
+                // offset *= pelletSpread;
+
                 Vector3 dir = Vector3.zero;
 
                 if (Vector3.Distance(destination, gunPos) > 1f)
                 {
-                    Vector3 direction = destination - particleSystem.transform.position;
-                    direction = particleSystem.transform.position + (direction.normalized * 2);
-                    offset = offset + direction;
-                    destination.y = particleSystem.transform.position.y;
+                    Vector3 direction = (destination - particleSystem.transform.position).normalized;
+                    direction = particleSystem.transform.position + (direction * range);
+                    direction += offset * pelletSpread;
+                    direction = direction - particleSystem.transform.position;
+                    dir = direction;
 
-
-                    Vector3 bulletDir = offset - particleSystem.transform.position;
-                    dir = bulletDir;
                     var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
-                    bullet.GetComponent<Rigidbody>().velocity = (destination - bulletDir).normalized * (bulletSpeed * Time.deltaTime);
+                    bullet.GetComponent<Rigidbody>().velocity = (direction).normalized * (bulletSpeed * Time.deltaTime);
                     //bullet.GetComponent<Rigidbody>().velocity = ((destination - particleSystem.transform.position)).normalized * (bulletSpeed * Time.deltaTime);
                 }
                 else
                 {
-                    offset.y = particleSystem.transform.forward.y;
-                    dir = (particleSystem.transform.forward + (offset + (particleSystem.transform.forward.normalized * 3)));
+                    Vector3 direction = ((particleSystem.transform.position + (particleSystem.transform.forward * range)) - particleSystem.transform.position).normalized;
+                    direction = particleSystem.transform.position + (direction * range);
+                    direction += offset * pelletSpread;
+                    direction = direction - particleSystem.transform.position;
+                    dir = direction;
+
                     var bullet = MonoBehaviour.Instantiate(tracer, particleSystem.transform.position, Quaternion.identity);
-                    bullet.GetComponent<Rigidbody>().velocity = (destination - dir).normalized * (bulletSpeed * Time.deltaTime);
-                   // bullet.GetComponent<Rigidbody>().velocity = ((destination - particleSystem.transform.position)).normalized * (bulletSpeed * Time.deltaTime);
+                    bullet.GetComponent<Rigidbody>().velocity = (dir).normalized * (bulletSpeed * Time.deltaTime);
+                    // bullet.GetComponent<Rigidbody>().velocity = ((destination - particleSystem.transform.position)).normalized * (bulletSpeed * Time.deltaTime);
                 }
 
 
@@ -133,21 +155,22 @@ public class Shotgun : WeaponStats
             {
                 if (hit.distance < range)
                 {
+                    Health health = hit.collider.gameObject.GetComponentInParent<Health>();
                     if (CritChance())
                     {
-                        hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(100);
+                        health.TakeDamage(100);
                     }
                     else
                     {
                         if ((int)hit.distance == 0)
                         {
-                            hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
+                            health.TakeDamage(damage);
                         }
                         else
                         {
                             Debug.Log(hit.distance);
                             //tracer.transform.Translate(Vector3.forward);
-                            hit.collider.gameObject.GetComponentInParent<Health>().TakeDamage(damage / (int)hit.distance);
+                            health.TakeDamage(damage / (int)hit.distance);
                         }
                     }
                     HitColour(hit.collider.gameObject);
@@ -171,6 +194,18 @@ public class Rifle : WeaponStats
         range = 20;
         gunType = EGun.Rifle;
     }
+
+    public override void RandomStats()
+    {
+        fireRate = Random.Range(0.2f, 1f);
+        reloadSpeed = Random.Range(0.5f, 2);
+        damage = Random.Range(12, 30);
+        critChance = Random.Range(5, 10);
+        magazineMAx = Random.Range(20, 45);
+        currentMagazine = magazineMAx;
+        range = Random.Range(15, 30);
+    }
+
 
     public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects)
     {
@@ -197,13 +232,27 @@ public class Pistol : WeaponStats
         gunType = EGun.Pistol;
     }
 
+    public override void RandomStats()
+    {
+        fireRate = Random.Range(0.4f, 1f);
+        reloadSpeed = Random.Range(0.5f, 2);
+        damage = Random.Range(25, 34);
+        critChance = Random.Range(7, 15);
+        magazineMAx = Random.Range(12, 20);
+        currentMagazine = magazineMAx;
+        range = Random.Range(12, 20);
+    }
+
+
+
+
     public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects)
     {
         if (currentMagazine > 0)
         {
             SoundManager.instance.PlayOnceAtPoint(ESoundClipEnum.Gun4Cut, particleSystem.gameObject);
             Shoot(particleSystem, tracer, destination, hitObjects);
-            currentMagazine--;            
+            currentMagazine--;
         }
     }
 }
@@ -221,6 +270,11 @@ public class NoGun : WeaponStats
         range = 0;
         gunType = EGun.NoGun;
     }
+
+    public override void RandomStats()
+    {
+    }
+
 
     public override void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects)
     {

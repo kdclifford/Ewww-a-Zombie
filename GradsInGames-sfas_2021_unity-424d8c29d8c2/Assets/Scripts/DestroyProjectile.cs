@@ -27,11 +27,11 @@ public class DestroyProjectile : MonoBehaviour
     {
         //foreach (LayerMask mask in hitLayers)
         
-            if (other.gameObject.layer != 11 && other.gameObject.layer != 12 && other.gameObject.layer != 15)
-            {
-               // Debug.Log(other.name);
-                Destroy(gameObject);
-            }
+            //if (other.gameObject.layer != 11 && other.gameObject.layer != 12 && other.gameObject.layer != 15)
+            //{
+            //   // Debug.Log(other.name);
+            //    Destroy(gameObject);
+            //}
         
     }
 

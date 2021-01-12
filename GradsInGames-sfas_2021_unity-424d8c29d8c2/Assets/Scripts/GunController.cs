@@ -113,6 +113,17 @@ public class GunController : MonoBehaviour
     {
         if (gun != gunManager._Gun1 && gun != gunManager._Gun2)
         {
+            EGun temp = gun;
+            if(slot > EGun.AmountOfGuns )
+            {
+                slot -= 5;
+            }
+
+            if (gun > EGun.AmountOfGuns)
+            {
+                temp = gun - 5;
+            }
+
             if (slot == EGun.Shotgun)
             {
                 shotgun.SetActive(false);
@@ -127,15 +138,15 @@ public class GunController : MonoBehaviour
             }
 
 
-            if (gun == EGun.Shotgun)
+            if (temp == EGun.Shotgun)
             {
                 shotgun.SetActive(true);
             }
-            else if(gun == EGun.Pistol)
+            else if(temp == EGun.Pistol)
             {
                 pistol.SetActive(true);
             }
-            else if (gun == EGun.Rifle)
+            else if (temp == EGun.Rifle)
             {
                 rifle.SetActive(true);
             }

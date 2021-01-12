@@ -30,11 +30,24 @@ public class PlayerAnimations : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.I))
         {
-            if (gunManager.currentGun != gunManager._Gun1)
-            {
+            EGun gun1 = gunManager._Gun1;
+            EGun gun2 = gunManager._Gun2;
+
+            //if(gun1 > EGun.AmountOfGuns)
+            //{
+            //    gun1 -= 5;
+            //}
+
+            //if (gun2 > EGun.AmountOfGuns)
+            //{
+            //    gun2 -= 5;
+            //}
+
+            if (gunManager.currentGun != gun1)
+            {                
                 EquptGun(gunManager._Gun1);
             }
-            else if (gunManager.currentGun != gunManager._Gun2)
+            else if (gunManager.currentGun != gun2)
             {
                 EquptGun(gunManager._Gun2);
             }
@@ -43,22 +56,50 @@ public class PlayerAnimations : MonoBehaviour
 
    public void EquptGun(EGun gun)
     {
-        _GunPose.SetInteger("Gun", (int)gun);
+        if (gun < EGun.AmountOfGuns)
+        {
+            _GunPose.SetInteger("Gun", (int)gun);
+        }
+        else
+        {
+            _GunPose.SetInteger("Gun", (int)(gun - 5));
+        }
     }
 
     public void CurrentPistol()
     {
-        gunManager.currentGun = EGun.Pistol;
+        if (gunManager._Gun1 - 5 == EGun.Pistol || gunManager._Gun2 - 5 == EGun.Pistol)
+        {
+            gunManager.currentGun = EGun.CustomPistol;
+        }
+        else
+        {
+            gunManager.currentGun = EGun.Pistol;
+        }
     }
 
     public void CurrentShotgun()
     {
-        gunManager.currentGun = EGun.Shotgun;
+        if (gunManager._Gun1 - 5 == EGun.Shotgun || gunManager._Gun2 - 5 == EGun.Shotgun)
+        {
+            gunManager.currentGun = EGun.CustomShotgun;
+        }
+        else
+        {
+            gunManager.currentGun = EGun.Shotgun;
+        }
     }
 
     public void CurrentRifle()
     {
-        gunManager.currentGun = EGun.Rifle;
+        if (gunManager._Gun1 - 5 == EGun.Rifle || gunManager._Gun2 - 5 == EGun.Rifle)
+        {
+            gunManager.currentGun = EGun.CustomRifle;
+        }
+        else
+        {
+            gunManager.currentGun = EGun.Rifle;
+        }
     }
 
     public void CurrentFlashLight()
@@ -80,4 +121,7 @@ public enum EGun
     Rifle = 3,
     FlashLight = 4,
     AmountOfGuns,
+    CustomShotgun,
+    CustomPistol,
+    CustomRifle,
 }

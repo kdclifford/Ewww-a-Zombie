@@ -46,6 +46,10 @@ public class GunManager : MonoBehaviour
         gunList.Add(new Pistol());
         gunList.Add(new Rifle());
         gunList.Add(new NoGun());
+        gunList.Add(new NoGun());
+        gunList.Add(new Shotgun());
+        gunList.Add(new Pistol());
+        gunList.Add(new Rifle());
         currentlyEquipped = gunList[(int)currentGun];
     }
 
@@ -55,9 +59,18 @@ public class GunManager : MonoBehaviour
         if (oldGun != currentGun)
         {
             currentlyEquipped = gunList[(int)currentGun];
+            EGun temp = currentGun;
+
+            Debug.Log(temp);
+
+            if(currentGun > EGun.AmountOfGuns)
+            {
+                temp -= 5;
+            }
+
             if (currentGun != EGun.NoGun && currentGun != EGun.FlashLight)
             {
-                particleSystem = GameObject.FindGameObjectWithTag(currentGun.ToString()).GetComponentInChildren<ParticleSystem>();
+                particleSystem = GameObject.FindGameObjectWithTag(temp.ToString()).GetComponentInChildren<ParticleSystem>();
             }
             oldGun = currentGun;
         }

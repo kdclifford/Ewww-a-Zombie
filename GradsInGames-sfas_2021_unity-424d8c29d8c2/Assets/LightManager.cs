@@ -22,8 +22,6 @@ public class LightManager : MonoBehaviour
     public Color lightOff = new Color(0, 0, 0, 1);
     public Color newLightColour;
 
-    public bool test = false;
-    public bool test2 = false;
     void Awake()
     {
         if (instance == null)
@@ -111,19 +109,6 @@ public class LightManager : MonoBehaviour
                 updateTimer();
             }
         }
-
-     if(test)
-        {
-            test = false;
-            SetLightsOn();
-        }
-
-        if (test2)
-        {
-            test2 = false;
-            SetLightsOff();
-        }
-
     }
 
     void updateTimer()

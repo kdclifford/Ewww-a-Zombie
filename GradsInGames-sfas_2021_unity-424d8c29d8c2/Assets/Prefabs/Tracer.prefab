@@ -167,6 +167,10 @@ MonoBehaviour:
     m_Bits: 65536
   - serializedVersion: 2
     m_Bits: 16384
+  - serializedVersion: 2
+    m_Bits: 131072
+  - serializedVersion: 2
+    m_Bits: 32768
 --- !u!135 &4834040980360391774
 SphereCollider:
   m_ObjectHideFlags: 0

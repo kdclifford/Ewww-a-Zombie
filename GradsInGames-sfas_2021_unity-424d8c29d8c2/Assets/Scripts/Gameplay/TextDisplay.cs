@@ -11,6 +11,7 @@ public class TextDisplay : MonoBehaviour
     private WaitForSeconds _shortWait;
     private WaitForSeconds _longWait;
     private State _state = State.Initialising;
+    public float textWait = 0.1f;
 
     public bool IsIdle { get { return _state == State.Idle; } }
     public bool IsBusy { get { return _state != State.Idle; } }
@@ -18,7 +19,7 @@ public class TextDisplay : MonoBehaviour
     private void Awake()
     {
         _displayText = GetComponent<TMP_Text>();
-        _shortWait = new WaitForSeconds(0.1f);
+        _shortWait = new WaitForSeconds(textWait);
         _longWait = new WaitForSeconds(0.8f);
 
         _displayText.text = string.Empty;
@@ -53,7 +54,7 @@ public class TextDisplay : MonoBehaviour
         }
     }
 
-    private IEnumerator DoClearText()
+    private void DoClearText()
     {
         if (gameObject.activeSelf)
         {
@@ -74,7 +75,7 @@ public class TextDisplay : MonoBehaviour
 
                 _displayText.text = charArray.ArrayToString();
                 ++currentLetter;
-                yield return null;
+               // yield return null;
             }
 
             _displayString = string.Empty;
@@ -108,8 +109,9 @@ public class TextDisplay : MonoBehaviour
         {
             StopAllCoroutines();
             _state = State.Busy;
-           
-            StartCoroutine(DoClearText());
+
+            //StartCoroutine(DoClearText());
+            DoClearText();
         }
     }
 }
