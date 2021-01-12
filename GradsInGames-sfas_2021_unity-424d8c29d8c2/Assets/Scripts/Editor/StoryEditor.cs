@@ -8,6 +8,7 @@ public class StoryEditor : EditorWindow
     private Vector2 _scroll = new Vector2();
     private int _currentIndex = -1;
     private View _view;
+    public StoryData data;
 
     [MenuItem("SFAS/Show Story Editor")]
     public static void ShowStoryEditor()
@@ -17,26 +18,37 @@ public class StoryEditor : EditorWindow
 
     void OnGUI()
     {
-        StoryData data = StoryData.LoadData();
-        SerializedObject dataObj = new SerializedObject(data);
-        SerializedProperty beatList = dataObj.FindProperty("_beats");
 
-        EditorGUILayout.BeginVertical();
-        _scroll = EditorGUILayout.BeginScrollView(_scroll);
+        data =(StoryData)EditorGUILayout.ObjectField(data, typeof(StoryData), true);
+        //if (GUILayout.Button("Load Data"))
+        //{
 
-        if (_view == View.Beat && _currentIndex != -1)
-        {
-            OnGUI_BeatView(beatList, _currentIndex);
+
+        //    data = StoryData.LoadData();
+        //}
+
+        if(data != null)
+        { 
+            SerializedObject dataObj = new SerializedObject(data);
+            SerializedProperty beatList = dataObj.FindProperty("_beats");
+
+            EditorGUILayout.BeginVertical();
+            _scroll = EditorGUILayout.BeginScrollView(_scroll);
+
+            if (_view == View.Beat && _currentIndex != -1)
+            {
+                OnGUI_BeatView(beatList, _currentIndex);
+            }
+            else
+            {
+                OnGUI_ListView(beatList);
+            }
+
+            EditorGUILayout.EndScrollView();
+            EditorGUILayout.EndVertical();
+
+            dataObj.ApplyModifiedProperties();
         }
-        else
-        {
-            OnGUI_ListView(beatList);
-        }
-
-        EditorGUILayout.EndScrollView();
-        EditorGUILayout.EndVertical();
-
-        dataObj.ApplyModifiedProperties();
     }
 
     private void OnGUI_ListView(SerializedProperty beatList)

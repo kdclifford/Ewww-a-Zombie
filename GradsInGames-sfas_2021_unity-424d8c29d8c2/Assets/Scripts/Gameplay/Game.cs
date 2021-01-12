@@ -131,6 +131,8 @@ public class Game : MonoBehaviour
         }
     }
 
+    //Menu Functions
+
     public void StartGame()
     {
         _output.Clear();
@@ -144,5 +146,34 @@ public class Game : MonoBehaviour
         Application.Quit();
     }
 
+    public void Slot1Pistol()
+    {
+        GunController.Instance.SelectGun(ref GunManager.Instance._Gun1, EGun.Pistol);
+    }
+
+    public void Slot1Rifle()
+    {
+        GunController.Instance.SelectGun(ref GunManager.Instance._Gun1, EGun.Rifle);
+    }
+
+    public void Slot1Shotgun()
+    {
+        GunController.Instance.SelectGun(ref GunManager.Instance._Gun1, EGun.Shotgun);
+    }
+
+    public void Slot2Pistol()
+    {
+        GunController.Instance.SelectGun(ref GunManager.Instance._Gun2, EGun.Pistol);
+    }
+
+    public void Slot2Rifle()
+    {
+        GunController.Instance.SelectGun(ref GunManager.Instance._Gun2, EGun.Rifle);
+    }
+
+    public void Slot2Shotgun()
+    {
+        GunController.Instance.SelectGun(ref GunManager.Instance._Gun2, EGun.Shotgun);
+    }
 
 }

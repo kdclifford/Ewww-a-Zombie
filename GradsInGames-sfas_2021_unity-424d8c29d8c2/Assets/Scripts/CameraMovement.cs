@@ -6,31 +6,39 @@ public class CameraMovement : MonoBehaviour
 {
     private Transform player;
     public float _mouseSpeed;
-    private float xRotation = 0f;
     public Vector3 startPos;
-    private Vector3 topFloorPos;
     public float cameraHeight;
     private Vector3 originPos;
     private Quaternion originRot;
 
     private Vector3 laptopPos;
     private Quaternion laptopRot;
+    private float _LaptopStartTime = 2;
+    private float _LaptopTimer = 0;
+    private bool _LaptopZoomIn = false;
+    private bool _LaptopZoomOut = false;
 
     private Vector3 tvPos;
     private Quaternion tvRot;
+    private float _TVStartTime = 2;
+    private float _TVTimer = 0;
+    private bool _TVZoomIn = false;
+    private bool _TVZoomOut = false;
 
     private Vector3 computerPos;
     private Quaternion computerRot;
+    private float _ComputerStartTime = 2;
+    private float _ComputerTimer = 0;
+    private bool _ComputerZoomIn = false;
+    private bool _ComputerZoomOut = false;
 
     private Vector3 newPos;
     private Quaternion newRot;
 
-    public float testtime = 0;
-    public float startTime = 10;
-    public float timer = 0;
-    private bool laptop = false;
-    private bool tv = false;
-    private bool computer = false;
+    private bool isMenuOn = false;
+
+    //public float testtime = 0;;
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +48,6 @@ public class CameraMovement : MonoBehaviour
         originRot = transform.rotation;
 
         startPos = transform.position - player.position;
-        topFloorPos = startPos;
 
         laptopPos = new Vector3(4.68f, 1f, 1.56f);
         laptopRot = Quaternion.Euler( new Vector3(21.26f, -9.3f, 0f ));
@@ -51,62 +58,145 @@ public class CameraMovement : MonoBehaviour
         computerPos = new Vector3(-10.68f, 1.66f, 9.48f);
         computerRot = Quaternion.Euler(new Vector3(20, 90, 0));
 
-        timer = startTime;
+        LaptopZoomIn();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if(Input.GetKey(KeyCode.T))
-        //{
-        //    SetOrigin();
-        //    laptop = !laptop;
-        //}
-
-        if (Input.GetKey(KeyCode.P))
+        if (_LaptopZoomIn)
         {
-            SetOrigin();
-            computer = !computer;
+            ZoomIn(laptopPos, laptopRot, ref _LaptopTimer, _LaptopStartTime);
+            
         }
-
-        if (laptop)
+        else if (_LaptopZoomOut)
         {
-            newPos = LerpPosition(originPos, laptopPos, testtime);
-            newRot = LerpRotation(originRot, laptopRot, testtime);
-
-            transform.position = newPos;
-            transform.rotation = newRot;
-            timer -= Time.deltaTime;
+            ZoomOut(laptopPos, laptopRot, ref _LaptopTimer, _LaptopStartTime);
         }
-
-        if (tv)
+        else if (_TVZoomIn)
         {
-            newPos = LerpPosition(originPos, tvPos, testtime);
-            newRot = LerpRotation(originRot, tvRot, testtime);
-
-            transform.position = newPos;
-            transform.rotation = newRot;
-            timer -= Time.deltaTime;
+            ZoomIn(tvPos, tvRot, ref _TVTimer, _TVStartTime);
         }
-
-       if (computer)
+        else if (_TVZoomOut)
         {
-            newPos = LerpPosition(originPos, computerPos, testtime);
-            newRot = LerpRotation(originRot, computerRot, testtime);
-
-            transform.position = newPos;
-            transform.rotation = newRot;
-            timer -= Time.deltaTime;
+            ZoomOut(tvPos, tvRot, ref _TVTimer, _TVStartTime);
+        }
+        else if (_ComputerZoomIn)
+        {
+            ZoomIn(computerPos, computerRot, ref _ComputerTimer, _ComputerStartTime);
+        }
+        else if (_ComputerZoomOut)
+        {
+            ZoomOut(computerPos, computerRot, ref _ComputerTimer, _ComputerStartTime);
         }
 
 
-        if (!laptop && !tv && !computer)
+
+
+
+     
+
+
+        if (!isMenuOn)
         {
             transform.position = new Vector3(player.position.x, player.position.y + cameraHeight, player.position.z + startPos.z);
         }
-       // startPos = transform.position - player.position;
+        // startPos = transform.position - player.position;
     }
+
+  public  void LaptopZoomIn()
+    {
+        isMenuOn = true;
+        _LaptopTimer = _LaptopStartTime;
+        SetOrigin();
+        _LaptopZoomIn = true;
+        _LaptopZoomOut = false;
+    }
+
+  public  void LaptopZoomOut()
+    {
+        _LaptopTimer = _LaptopStartTime;
+        //SetOrigin();
+        _LaptopZoomIn = false;
+        _LaptopZoomOut = true;
+    }
+
+
+    public void TVZoomIn()
+    {
+        isMenuOn = true;
+        _TVTimer = _TVStartTime;
+        SetOrigin();
+        _TVZoomIn = true;
+        _TVZoomOut = false;
+    }
+
+    public void TVZoomOut()
+    {
+        _TVTimer = _TVStartTime;
+        //SetOrigin();
+        _TVZoomIn = false;
+        _TVZoomOut = true;
+    }
+
+    public void ComputerZoomIn()
+    {
+        isMenuOn = true;
+        _ComputerTimer = _ComputerStartTime;
+        SetOrigin();
+        _ComputerZoomIn = true;
+        _ComputerZoomOut = false;
+    }
+
+    public void ComputerZoomOut()
+    {
+        _ComputerTimer = _ComputerStartTime;
+        //SetOrigin();
+        _ComputerZoomIn = false;
+        _ComputerZoomOut = true;
+    }
+
+
+
+    private void ZoomIn(Vector3 pos, Quaternion rot, ref float timer, float timerStart)
+    {
+        newPos = LerpPosition(pos, originPos, timer / timerStart);
+        newRot = LerpRotation(rot, originRot, timer / timerStart);
+
+        transform.position = newPos;
+        transform.rotation = newRot;
+        if (timer < 0)
+        {
+            timer = 0;
+        }
+        else
+        {
+            timer -= Time.deltaTime;
+        }
+    }
+
+    private void ZoomOut(Vector3 pos, Quaternion rot, ref float timer, float timerStart)
+    {
+        newPos = LerpPosition(originPos, pos, timer / timerStart);
+        newRot = LerpRotation(originRot, rot, timer / timerStart);
+
+
+        transform.position = newPos;
+        transform.rotation = newRot;
+        if (timer < 0)
+        {
+            timer = 0;
+            isMenuOn = false;
+        }
+        else
+        {
+            timer -= Time.deltaTime;
+        }
+    }
+
+
+
 
     public static Vector3 LerpPosition(Vector3 pos, Vector3 endPos, float time)
     {

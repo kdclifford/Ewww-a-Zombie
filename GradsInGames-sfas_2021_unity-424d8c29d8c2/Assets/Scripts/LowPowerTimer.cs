@@ -9,12 +9,14 @@ public class LowPowerTimer : MonoBehaviour
     private float _Timer = 0;
     private TMP_Text _timerText;
     private Animator _laptopAnimatior;
+    private CameraMovement _CameraMovement;
     //public Animator _CameraAnim;
 
     private void Awake()
     {
         _timerText = GetComponent<TMP_Text>();
         _laptopAnimatior = GameObject.FindGameObjectWithTag("Laptop").GetComponent<Animator>();
+        _CameraMovement = Camera.main.gameObject.GetComponent<CameraMovement>();
     }
 
 
@@ -48,7 +50,7 @@ public class LowPowerTimer : MonoBehaviour
         if (_Timer <= 0)
         {
             PlayLaptopAnimation();
-            //CameraZoom();
+            _CameraMovement.LaptopZoomOut();
         }
     }
 

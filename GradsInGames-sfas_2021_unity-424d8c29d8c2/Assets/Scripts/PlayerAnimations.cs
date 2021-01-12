@@ -41,7 +41,7 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
-    void EquptGun(EGun gun)
+   public void EquptGun(EGun gun)
     {
         _GunPose.SetInteger("Gun", (int)gun);
     }

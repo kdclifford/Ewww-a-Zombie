@@ -4,9 +4,32 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
-   private GunManager gunManager;
+    private static GunController _instance;
+
+    public static GunController Instance { get { return _instance; } }
+
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+
+
+
+    private GunManager gunManager;
+    public GameObject rifle;
+    public GameObject pistol;
+    public GameObject shotgun;
 
     PlayerController playerController;
+    PlayerAnimations playerAnimations;
 
     Vector3 endPoint;
    public LayerMask layerMask;
@@ -23,6 +46,7 @@ public class GunController : MonoBehaviour
     {
         gunManager = GunManager.Instance;
         playerController = GetComponent<PlayerController>();
+        playerAnimations = transform.GetComponentInChildren<PlayerAnimations>();
     }
 
     // Update is called once per frame
@@ -84,4 +108,45 @@ public class GunController : MonoBehaviour
             timer -= Time.deltaTime;
         }
     }
+
+    public void SelectGun(ref EGun slot, EGun gun)
+    {
+        if (gun != gunManager._Gun1 && gun != gunManager._Gun2)
+        {
+            if (slot == EGun.Shotgun)
+            {
+                shotgun.SetActive(false);
+            }
+            else if (slot == EGun.Pistol)
+            {
+                pistol.SetActive(false);
+            }
+            else if (slot == EGun.Rifle)
+            {
+                rifle.SetActive(false);
+            }
+
+
+            if (gun == EGun.Shotgun)
+            {
+                shotgun.SetActive(true);
+            }
+            else if(gun == EGun.Pistol)
+            {
+                pistol.SetActive(true);
+            }
+            else if (gun == EGun.Rifle)
+            {
+                rifle.SetActive(true);
+            }
+            slot = gun;
+
+            gunManager.currentGun = gun;
+            playerAnimations.EquptGun(gun);
+        }
+    }
+
+   
+
+
 }

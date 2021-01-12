@@ -17,7 +17,7 @@ public class StoryData : ScriptableObject
     }
 
 #if UNITY_EDITOR
-    public const string PathToAsset = "Assets/Data/Story.asset";
+    public const string PathToAsset = "Assets/Data/UpgradeMenu.asset";
 
     public static StoryData LoadData()
     {

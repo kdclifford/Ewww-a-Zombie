@@ -55,11 +55,14 @@ public class GunManager : MonoBehaviour
         if (oldGun != currentGun)
         {
             currentlyEquipped = gunList[(int)currentGun];
-            if ( currentGun != EGun.NoGun && currentGun != EGun.FlashLight)
-            { 
-            particleSystem = GameObject.FindGameObjectWithTag(currentGun.ToString()).GetComponentInChildren<ParticleSystem>();
-        }
+            if (currentGun != EGun.NoGun && currentGun != EGun.FlashLight)
+            {
+                particleSystem = GameObject.FindGameObjectWithTag(currentGun.ToString()).GetComponentInChildren<ParticleSystem>();
+            }
             oldGun = currentGun;
         }
+
+
+
     }
 }
