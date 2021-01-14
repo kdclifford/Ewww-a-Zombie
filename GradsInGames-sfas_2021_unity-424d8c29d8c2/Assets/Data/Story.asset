@@ -14,19 +14,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _beats:
   - _choices:
-    - _text: Yes
+    - _text: Play Game?
       _beatId: 2
       _type: 0
       _functionName: 
-    - _text: No
+    - _text: Volume Settings
       _beatId: 3
       _type: 0
-      _functionName: New Beat Choice
-    _text: Play Tetris?
+      _functionName: 
+    - _text: Controller Info
+      _beatId: 4
+      _type: 0
+      _functionName: 
+    - _text: Exit Menu
+      _beatId: 5
+      _type: 0
+      _functionName: 
+    - _text: Exit Game?
+      _beatId: 6
+      _type: 0
+      _functionName: 
+    _text: Main Menu
     _id: 1
   - _choices: []
     _text: StartGame
     _id: 2
   - _choices: []
-    _text: EndGame
+    _text: DisplayVolume
     _id: 3
+  - _choices: []
+    _text: DisplayConInfo
+    _id: 4
+  - _choices: []
+    _text: ExitMenu
+    _id: 5
+  - _choices: []
+    _text: ExitGame
+    _id: 6

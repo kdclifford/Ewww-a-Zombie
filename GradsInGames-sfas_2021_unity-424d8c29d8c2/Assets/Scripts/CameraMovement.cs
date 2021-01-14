@@ -86,28 +86,28 @@ public class CameraMovement : MonoBehaviour
     {
         if (_LaptopZoomIn)
         {
-            ZoomIn(laptopPos, laptopRot, ref _LaptopTimer, _LaptopStartTime);
+            ZoomIn(laptopPos, laptopRot, ref _LaptopTimer, _LaptopStartTime, ref _LaptopZoomIn);
             
         }
         else if (_LaptopZoomOut)
         {
-            ZoomOut(laptopPos, laptopRot, ref _LaptopTimer, _LaptopStartTime);
+            ZoomOut(laptopPos, laptopRot, ref _LaptopTimer, _LaptopStartTime,ref _LaptopZoomOut );
         }
         else if (_TVZoomIn)
         {
-            ZoomIn(tvPos, tvRot, ref _TVTimer, _TVStartTime);
+            ZoomIn(tvPos, tvRot, ref _TVTimer, _TVStartTime, ref _TVZoomIn);
         }
         else if (_TVZoomOut)
         {
-            ZoomOut(tvPos, tvRot, ref _TVTimer, _TVStartTime);
+            ZoomOut(tvPos, tvRot, ref _TVTimer, _TVStartTime, ref _TVZoomOut);
         }
         else if (_ComputerZoomIn)
         {
-            ZoomIn(computerPos, computerRot, ref _ComputerTimer, _ComputerStartTime);
+            ZoomIn(computerPos, computerRot, ref _ComputerTimer, _ComputerStartTime, ref _ComputerZoomIn);
         }
         else if (_ComputerZoomOut)
         {
-            ZoomOut(computerPos, computerRot, ref _ComputerTimer, _ComputerStartTime);
+            ZoomOut(computerPos, computerRot, ref _ComputerTimer, _ComputerStartTime, ref _ComputerZoomOut);
         }
 
 
@@ -178,7 +178,7 @@ public class CameraMovement : MonoBehaviour
 
 
 
-    private void ZoomIn(Vector3 pos, Quaternion rot, ref float timer, float timerStart)
+    private void ZoomIn(Vector3 pos, Quaternion rot, ref float timer, float timerStart, ref bool zoom)
     {
         newPos = LerpPosition(pos, originPos, timer / timerStart);
         newRot = LerpRotation(rot, originRot, timer / timerStart);
@@ -188,6 +188,7 @@ public class CameraMovement : MonoBehaviour
         if (timer < 0)
         {
             timer = 0;
+            zoom = !zoom;
         }
         else
         {
@@ -195,7 +196,7 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    private void ZoomOut(Vector3 pos, Quaternion rot, ref float timer, float timerStart)
+    private void ZoomOut(Vector3 pos, Quaternion rot, ref float timer, float timerStart, ref bool zoom)
     {
         newPos = LerpPosition(originPos, pos, timer / timerStart);
         newRot = LerpRotation(originRot, rot, timer / timerStart);
@@ -207,6 +208,7 @@ public class CameraMovement : MonoBehaviour
         {
             timer = 0;
             isMenuOn = false;
+            zoom = !zoom;
         }
         else
         {

@@ -14,6 +14,10 @@ TagManager:
   - Room
   - GameManager
   - Invisible
+  - Computer
+  - TV
+  - ElectricBox
+  - PistolPickUP
   layers:
   - Default
   - TransparentFX

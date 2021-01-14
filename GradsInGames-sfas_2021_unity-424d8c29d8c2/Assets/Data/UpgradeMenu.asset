@@ -14,84 +14,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _beats:
   - _choices:
-    - _text: Yes
-      _beatId: 2
+    - _text: Pistol
+      _beatId: 5
       _type: 1
       _functionName: 
-    - _text: 'No
-
-'
+    - _text: Shotgun
+      _beatId: 4
+      _type: 1
+      _functionName: 
+    - _text: Rifle
       _beatId: 3
+      _type: 0
+      _functionName: New Beat Choice
+    - _text: Gun With Random Stats
+      _beatId: 6
+      _type: 0
+      _functionName: New Beat Choice
+    - _text: Exit Menu?
+      _beatId: 2
       _type: 0
       _functionName: New Beat Choice
     _text: Buy Gun?
     _id: 1
-  - _choices:
-    - _text: Slot 1
-      _beatId: 4
-      _type: 1
-      _functionName: 
-    - _text: Slot 2
-      _beatId: 5
-      _type: 1
-      _functionName: 
-    - _text: Buy Two Random Guna
-      _beatId: 12
-      _type: 0
-      _functionName: New Beat Choice
-    _text: Buy Gun for slot 1 or 2
-    _id: 2
   - _choices: []
     _text: ExitMenu
+    _id: 2
+  - _choices: []
+    _text: Rifle
     _id: 3
-  - _choices:
-    - _text: Rifle
-      _beatId: 6
-      _type: 0
-      _functionName: New Beat Choice
-    - _text: Shotgun
-      _beatId: 7
-      _type: 0
-      _functionName: New Beat Choice
-    - _text: Pistol
-      _beatId: 8
-      _type: 0
-      _functionName: New Beat Choice
-    _text: Buy Gun
+  - _choices: []
+    _text: Shotgun
     _id: 4
-  - _choices:
-    - _text: Rifle
-      _beatId: 9
-      _type: 0
-      _functionName: New Beat Choice
-    - _text: Shotgun
-      _beatId: 10
-      _type: 0
-      _functionName: New Beat Choice
-    - _text: Pistol
-      _beatId: 11
-      _type: 0
-      _functionName: New Beat Choice
-    _text: Buy Gun
+  - _choices: []
+    _text: Pistol
     _id: 5
   - _choices: []
-    _text: Slot1Rifle
+    _text: RandomGun
     _id: 6
-  - _choices: []
-    _text: Slot1Shotgun
-    _id: 7
-  - _choices: []
-    _text: Slot1Pistol
-    _id: 8
-  - _choices: []
-    _text: Slot2Rifle
-    _id: 9
-  - _choices: []
-    _text: Slot2Shotgun
-    _id: 10
-  - _choices: []
-    _text: Slot2Pistol
-    _id: 11
-  - _choices: []
-    _text: TwoRandomGuns
-    _id: 12

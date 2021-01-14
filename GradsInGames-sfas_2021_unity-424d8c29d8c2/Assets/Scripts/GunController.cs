@@ -109,10 +109,42 @@ public class GunController : MonoBehaviour
         }
     }
 
-    public void SelectGun(ref EGun slot, EGun gun)
+    public void SelectGun(EGun gun)
     {
-        if (gun != gunManager._Gun1 && gun != gunManager._Gun2)
+        EGun slot = GunManager.Instance.currentGun;
+
+        if (gun != gunManager._Gun1 && gun != gunManager._Gun2 || (int)gun > (int)EGun.AmountOfGuns)
         {
+            if((int)gun > (int)EGun.AmountOfGuns && gunManager._Gun1 != EGun.NoGun && gunManager._Gun2 != EGun.NoGun)
+            {
+                if(gunManager._Gun1 == gun)
+                {
+                    gunManager._Gun1 = gun;
+                }
+                else if(gunManager._Gun2 == gun)
+                {
+                    gunManager._Gun2 = gun;
+                }
+            }
+           else if (gunManager._Gun1 == EGun.NoGun)
+            {
+                gunManager._Gun1 = gun;
+            }
+            else if (gunManager._Gun2 == EGun.NoGun)
+            {
+                gunManager._Gun2 = gun;
+            }
+           else if (GunManager.Instance.currentGun == GunManager.Instance._Gun1)
+            {
+                slot = GunManager.Instance._Gun1;
+                GunManager.Instance._Gun1 = gun;
+            }
+            else
+            {
+                slot = GunManager.Instance._Gun2;
+                GunManager.Instance._Gun2 = gun;
+            }
+
             EGun temp = gun;
             if(slot > EGun.AmountOfGuns )
             {
@@ -150,7 +182,10 @@ public class GunController : MonoBehaviour
             {
                 rifle.SetActive(true);
             }
-            slot = gun;
+
+
+         
+
 
             gunManager.currentGun = gun;
             playerAnimations.EquptGun(gun);

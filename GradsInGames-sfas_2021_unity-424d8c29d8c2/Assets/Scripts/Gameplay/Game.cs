@@ -8,7 +8,7 @@ public class Game : MonoBehaviour
     private TextDisplay _output;
     private BeatData _currentBeat;
     private WaitForSeconds _wait;
-    public bool active = false;
+    public bool _ScreenActive = false;
     private bool reset = false;
 
     private void Awake()
@@ -20,7 +20,7 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
-        if (active)
+        if (_ScreenActive)
         {
             if (_output.IsIdle)
             {
@@ -145,6 +145,12 @@ public class Game : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(false);
         transform.GetChild(2).gameObject.SetActive(true);
         transform.GetChild(3).gameObject.SetActive(true);
+        BeatData data = _data.GetBeatById(1);
+       // data.Decision[0].DisplayText = "Resume Game?";
+        data = _data.GetBeatById(2);
+        data.DisplayText = "ResumeGame";
+
+        reset = true;
     }
 
     public void EndGame()
@@ -152,70 +158,60 @@ public class Game : MonoBehaviour
         Application.Quit();
     }
 
-    public void Slot1Pistol()
+    public void ResumeGame()
     {
-        GunController.Instance.SelectGun(ref GunManager.Instance._Gun1, EGun.Pistol);
+        CameraMovement.Instance.LaptopZoomOut();
         reset = true;
     }
 
-    public void Slot1Rifle()
+    public void Pistol()
     {
-        GunController.Instance.SelectGun(ref GunManager.Instance._Gun1, EGun.Rifle);
+        GunController.Instance.SelectGun(EGun.Pistol);
         reset = true;
     }
 
-    public void Slot1Shotgun()
+    public void Rifle()
     {
-        GunController.Instance.SelectGun(ref GunManager.Instance._Gun1, EGun.Shotgun);
+        GunController.Instance.SelectGun(EGun.Rifle);
         reset = true;
     }
 
-    public void Slot2Pistol()
+    public void Shotgun()
     {
-        GunController.Instance.SelectGun(ref GunManager.Instance._Gun2, EGun.Pistol);
+        GunController.Instance.SelectGun(EGun.Shotgun);
         reset = true;
     }
 
-    public void Slot2Rifle()
-    {
-        GunController.Instance.SelectGun(ref GunManager.Instance._Gun2, EGun.Rifle);
-        reset = true;
-    }
-
-    public void Slot2Shotgun()
-    {
-        GunController.Instance.SelectGun(ref GunManager.Instance._Gun2, EGun.Shotgun);
-        reset = true;
-    }
-
-    public void TwoRandomGuns()
+    public void RandomGun()
     {
         int newGun = Random.Range(6, 9);
-        int newGun2 = Random.Range(6, 9);
 
         Debug.Log(newGun);
-        Debug.Log(newGun2);
-
-        while (newGun == newGun2)
-        {
-            newGun2 = Random.Range(6, 9);
-        }
 
         GunManager.Instance.gunList[newGun].RandomStats();
-        GunManager.Instance.gunList[newGun2].RandomStats();
 
-        GunController.Instance.SelectGun(ref GunManager.Instance._Gun1, (EGun) newGun);
-        GunController.Instance.SelectGun(ref GunManager.Instance._Gun2, (EGun)newGun2);
+        GunController.Instance.SelectGun((EGun) newGun);
 
         reset = true;
     }
 
+    public void DisplayVolume()
+    {
+        UIController.Instance._VolumeSettings.SetActive(true);
+        reset = true;
+    }
 
+    public void DisplayConInfo()
+    {
+        UIController.Instance._ControllerInfo.SetActive(true);
+        reset = true;
+    }
 
     public void ExitMenu()
     {
-        CameraMovement.Instance.LaptopZoomOut();
-        active = false;
+        CameraMovement.Instance.ComputerZoomOut();
+        _ScreenActive = false;
+        reset = true;
     }
 
 

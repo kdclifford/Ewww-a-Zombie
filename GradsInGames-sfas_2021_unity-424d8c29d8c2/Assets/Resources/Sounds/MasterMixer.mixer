@@ -6,7 +6,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Music
+  m_Name: Zombie
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 170c069f2d4361a42b82f3d1763fcb92
   m_Children: []
@@ -69,13 +69,13 @@ AudioMixerController:
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: b279f404ca0660946a5e0be59020b25e
-    name: Guns
+    name: Gun
   - guid: ff6c3f7d5b5511545872679835f44ecf
     name: Master
   - guid: fcbf70a32c94d284b84de380ece08b01
     name: Misc
   - guid: e63ff726ef9e9c8469fc105eb43e853e
-    name: Music
+    name: Zombie
   m_AudioMixerGroupViews:
   - guids:
     - c8d65870d8bc189479a1ea5a65a8d697

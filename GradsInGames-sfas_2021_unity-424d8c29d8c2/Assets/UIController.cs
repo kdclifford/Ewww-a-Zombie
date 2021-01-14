@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class UIController : MonoBehaviour
@@ -10,6 +11,25 @@ public class UIController : MonoBehaviour
     public TMP_Text _ZombieAmount;
     public TMP_Text _AmmoCounter;
     public TMP_Text _PointCount;
+    public GameObject _VolumeSettings;
+    public GameObject _ControllerInfo;
+
+    private static UIController _instance;
+
+    public static UIController Instance { get { return _instance; } }
+
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
     // Update is called once per frame
     void Update()

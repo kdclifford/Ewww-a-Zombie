@@ -15,8 +15,8 @@ public class ZombieAnimation : MonoBehaviour
     private float minSpeed = 0.25f;
     private float maxSpeed = 3.5f;
     private float currentSpeed = 0;
-    public float speedOffset;
-
+    public float zombieSpeed = 1;
+    public bool setSpeed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,8 +26,15 @@ public class ZombieAnimation : MonoBehaviour
         _Animator = GetComponent<Animator>();
         _NavMesh.SetDestination(target.transform.position);
         _Health = GetComponent<Health>();
-        currentSpeed = minSpeed + (maxSpeed - minSpeed) * (SpawnManager.instance.currentRound * 0.1f);
-        _NavMesh.speed = Mathf.Lerp(minSpeed, maxSpeed, (SpawnManager.instance.currentRound - 1) * 0.1f);
+        if (!setSpeed)
+        {
+            currentSpeed = minSpeed + (maxSpeed - minSpeed) * (SpawnManager.instance.currentRound * 0.1f);
+            _NavMesh.speed = Mathf.Lerp(minSpeed, maxSpeed, (SpawnManager.instance.currentRound - 1) * 0.1f);
+        }
+        else
+        {
+            _NavMesh.speed = zombieSpeed;
+        }
     }
 
     // Update is called once per frame
