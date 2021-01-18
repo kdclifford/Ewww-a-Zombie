@@ -13,6 +13,6 @@ public class BeatData
 
     //public ChoiceType GetChoiceType { get { return _type; } }
     public List<ChoiceData> Decision { get { return _choices; } }
-    public string DisplayText { get { return _text; } set { DisplayText = value; } }
+    public string DisplayText { get { return _text; } }
     public int ID { get { return _id; } }
 }

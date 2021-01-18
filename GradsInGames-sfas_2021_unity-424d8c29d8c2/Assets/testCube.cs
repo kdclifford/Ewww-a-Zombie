@@ -37,4 +37,10 @@ public class testCube : MonoBehaviour
 
 
     }
+
+    public void DestoryOnDeath()
+    {
+        Destroy(gameObject, 5.0f);
+    }
+
 }

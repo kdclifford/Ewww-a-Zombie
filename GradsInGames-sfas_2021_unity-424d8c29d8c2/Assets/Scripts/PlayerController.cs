@@ -34,69 +34,70 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // isGrounded = Physics.CheckSphere(transform.position, groundDistance, ~groundMask);
-
-        if(isGrounded && velocity.y < 0)
+        // isGrounded = Physics.CheckSphere(transform.position, groundDistance, ~groundMask);
+        if (GetComponent<Health>()._CurrentHealth > 0)
         {
-            velocity.y = -0.1f;
-        }
-
-      
-        //transform.position = transform.position;
-
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-        Vector2 walkRot = CurrentDirection(new Vector2(move.x, move.z), gameObject);
-
-        _Animator.SetFloat("Xmove", walkRot.x);
-        _Animator.SetFloat("Ymove", walkRot.y);
-
-        //Get the Screen position of the mouse
-        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition );
-        Plane ground = new Plane(Vector3.up, Vector3.zero);
-
-        // Debug.Log(Input.mousePosition);
-
-        Vector3 newGunPos = transform.position;
-        newGunPos.y = transform.position.y + GunManager.Instance.currentlyEquipped.gunHeight;
-
-        Plane groundPlane = new Plane(Vector3.up, newGunPos);
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float distance;
-        Vector3 axis = Vector3.zero;
-
-        if (groundPlane.Raycast(ray, out distance))
-        {
-            point = ray.GetPoint(distance);
-            axis = (point - newGunPos).normalized;
-            axis = new Vector3(axis.x, 0f, axis.z);
-            if (Vector3.Distance(point , newGunPos) > 0.5f)
+            if (isGrounded && velocity.y < 0)
             {
-                transform.rotation = Quaternion.LookRotation(axis);
+                velocity.y = -0.1f;
             }
+
+
+            //transform.position = transform.position;
+
+            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+            Vector2 walkRot = CurrentDirection(new Vector2(move.x, move.z), gameObject);
+
+            _Animator.SetFloat("Xmove", walkRot.x);
+            _Animator.SetFloat("Ymove", walkRot.y);
+
+            //Get the Screen position of the mouse
+            Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Plane ground = new Plane(Vector3.up, Vector3.zero);
+
+            // Debug.Log(Input.mousePosition);
+
+            Vector3 newGunPos = transform.position;
+            newGunPos.y = transform.position.y + GunManager.Instance.currentlyEquipped.gunHeight;
+
+            Plane groundPlane = new Plane(Vector3.up, newGunPos);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float distance;
+            Vector3 axis = Vector3.zero;
+
+            if (groundPlane.Raycast(ray, out distance))
+            {
+                point = ray.GetPoint(distance);
+                axis = (point - newGunPos).normalized;
+                axis = new Vector3(axis.x, 0f, axis.z);
+                if (Vector3.Distance(point, newGunPos) > 0.5f)
+                {
+                    transform.rotation = Quaternion.LookRotation(axis);
+                }
+            }
+
+            move = move.normalized * (_movementSpeed * Time.deltaTime);
+
+
+            controller.Move(move);
+
+            velocity.y += gravity * Time.deltaTime;
+
+            controller.Move(velocity * Time.deltaTime);
+
+            controller.enableOverlapRecovery = false;
+            if (transform.position.y > -0.36f && gameManager.GetComponent<PlayerCurrentLocation>().playerPos == EAgentPos.Upstairs)
+            {
+                transform.position = new Vector3(transform.position.x, -0.36f, transform.position.z);
+            }
+
+            //if (transform.position.y > -3.16 && gameManager.GetComponent<PlayerCurrentLocation>().playerPos == EAgentPos.Downstairs)
+            //{
+            //    transform.position = new Vector3(transform.position.x, -3.16f, transform.position.z);
+            //}
+
         }
-
-        move = move.normalized * (_movementSpeed * Time.deltaTime);
-
-
-        controller.Move(move);
-
-        velocity.y += gravity * Time.deltaTime;
-
-        controller.Move(velocity * Time.deltaTime);
-
-        controller.enableOverlapRecovery = false;
-        if (transform.position.y > -0.36f && gameManager.GetComponent<PlayerCurrentLocation>().playerPos == EAgentPos.Upstairs)
-        {
-            transform.position = new Vector3(transform.position.x, -0.36f, transform.position.z);
-        }
-
-        //if (transform.position.y > -3.16 && gameManager.GetComponent<PlayerCurrentLocation>().playerPos == EAgentPos.Downstairs)
-        //{
-        //    transform.position = new Vector3(transform.position.x, -3.16f, transform.position.z);
-        //}
-
     }
-
 
 
 

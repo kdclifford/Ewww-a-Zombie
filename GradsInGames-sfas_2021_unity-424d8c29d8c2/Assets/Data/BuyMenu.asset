@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf5d5e33bab057c43929a11bc8f25f44, type: 3}
+  m_Name: BuyMenu
+  m_EditorClassIdentifier: 
+  _beats:
+  - _choices:
+    - _text: Pistol 100 Points
+      _beatId: 5
+      _type: 0
+      _functionName: 
+    - _text: Shotgun 100 Points
+      _beatId: 4
+      _type: 0
+      _functionName: 
+    - _text: Rifle 150 Points
+      _beatId: 3
+      _type: 0
+      _functionName: New Beat Choice
+    - _text: Gun With Random Stats 300 Points
+      _beatId: 6
+      _type: 0
+      _functionName: New Beat Choice
+    - _text: Buy Ammo? 200 Points
+      _beatId: 7
+      _type: 0
+      _functionName: New Beat Choice
+    - _text: Exit Menu?
+      _beatId: 2
+      _type: 0
+      _functionName: New Beat Choice
+    _text: Buy Gun?
+    _id: 1
+  - _choices: []
+    _text: ExitMenu
+    _id: 2
+  - _choices: []
+    _text: Rifle
+    _id: 3
+  - _choices: []
+    _text: Shotgun
+    _id: 4
+  - _choices: []
+    _text: Pistol
+    _id: 5
+  - _choices: []
+    _text: RandomGun
+    _id: 6
+  - _choices: []
+    _text: MaxAmmo
+    _id: 7
+  - _choices:
+    - _text: Try Again
+      _beatId: 1
+      _type: 1
+      _functionName: 
+    - _text: Exit Menu?
+      _beatId: 2
+      _type: 0
+      _functionName: 
+    _text: Not Enough Points!
+    _id: 10

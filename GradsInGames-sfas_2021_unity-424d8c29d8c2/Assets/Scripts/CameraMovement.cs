@@ -17,6 +17,8 @@ public class CameraMovement : MonoBehaviour
     private float _LaptopTimer = 0;
     private bool _LaptopZoomIn = false;
     private bool _LaptopZoomOut = false;
+    public GameObject laptopHud;
+    public bool upgradeMenu = false;
 
     private Vector3 tvPos;
     private Quaternion tvRot;
@@ -24,6 +26,7 @@ public class CameraMovement : MonoBehaviour
     private float _TVTimer = 0;
     private bool _TVZoomIn = false;
     private bool _TVZoomOut = false;
+    public GameObject tvHud;
 
     private Vector3 computerPos;
     private Quaternion computerRot;
@@ -77,7 +80,11 @@ public class CameraMovement : MonoBehaviour
         computerPos = new Vector3(-10.68f, 1.66f, 9.48f);
         computerRot = Quaternion.Euler(new Vector3(20, 90, 0));
 
-        LaptopZoomIn();
+        isMenuOn = true;
+
+        // LaptopZoomIn();
+        transform.position = laptopPos;
+        transform.rotation = laptopRot;
 
     }
 
@@ -131,6 +138,10 @@ public class CameraMovement : MonoBehaviour
         SetOrigin();
         _LaptopZoomIn = true;
         _LaptopZoomOut = false;
+     
+            laptopHud.SetActive(true);
+        
+        upgradeMenu = true;
     }
 
   public  void LaptopZoomOut()
@@ -139,6 +150,7 @@ public class CameraMovement : MonoBehaviour
         //SetOrigin();
         _LaptopZoomIn = false;
         _LaptopZoomOut = true;
+        laptopHud.SetActive(false);
     }
 
 
@@ -149,6 +161,7 @@ public class CameraMovement : MonoBehaviour
         SetOrigin();
         _TVZoomIn = true;
         _TVZoomOut = false;
+        tvHud.SetActive(true);
     }
 
     public void TVZoomOut()
@@ -157,6 +170,7 @@ public class CameraMovement : MonoBehaviour
         //SetOrigin();
         _TVZoomIn = false;
         _TVZoomOut = true;
+        tvHud.SetActive(false);
     }
 
     public void ComputerZoomIn()
@@ -189,6 +203,7 @@ public class CameraMovement : MonoBehaviour
         {
             timer = 0;
             zoom = !zoom;
+            player.GetComponent<PlayerController>().enabled = false;
         }
         else
         {
@@ -209,6 +224,7 @@ public class CameraMovement : MonoBehaviour
             timer = 0;
             isMenuOn = false;
             zoom = !zoom;
+            player.GetComponent<PlayerController>().enabled = true;
         }
         else
         {

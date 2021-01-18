@@ -10,6 +10,8 @@ public class Game : MonoBehaviour
     private WaitForSeconds _wait;
     public bool _ScreenActive = false;
     private bool reset = false;
+    private bool disable = false;
+    private float statPrice = 20;
 
     private void Awake()
     {
@@ -22,6 +24,7 @@ public class Game : MonoBehaviour
     {
         if (_ScreenActive)
         {
+            
             if (_output.IsIdle)
             {
                 if (_currentBeat == null)
@@ -32,8 +35,11 @@ public class Game : MonoBehaviour
                 {
                     UpdateInput();
                 }
+                //Debug.Log(_currentBeat.ID);
+                //Debug.Log(_currentBeat.DisplayText);
             }
         }
+
     }
 
     private void UpdateInput()
@@ -44,16 +50,16 @@ public class Game : MonoBehaviour
             {
                 if (_currentBeat.ID == 1)
                 {
-                    Application.Quit();
+                    DisplayBeat(1);
                 }
                 else
                 {
                     DisplayBeat(1);
-                }                
+                }
             }
             reset = false;
         }
-        else
+        else if (_currentBeat.Decision.Count > 0 && !disable)
         {
             KeyCode alpha = KeyCode.Alpha1;
             KeyCode keypad = KeyCode.Keypad1;
@@ -90,9 +96,9 @@ public class Game : MonoBehaviour
     {
         BeatData data = _data.GetBeatById(id);
         SendMessage(data.DisplayText);
-
-       // StartCoroutine(DoDisplay(data));
-        _currentBeat = data;
+        // StartCoroutine(DoDisplay(data));
+       // _currentBeat = data;
+       // _output.Clear();
     }
 
 
@@ -142,15 +148,15 @@ public class Game : MonoBehaviour
     public void StartGame()
     {
         _output.Clear();
-        transform.GetChild(0).gameObject.SetActive(false);
+       // transform.GetChild(0).gameObject.SetActive(false);
         transform.GetChild(2).gameObject.SetActive(true);
         transform.GetChild(3).gameObject.SetActive(true);
         BeatData data = _data.GetBeatById(1);
-       // data.Decision[0].DisplayText = "Resume Game?";
-        data = _data.GetBeatById(2);
-        data.DisplayText = "ResumeGame";
-
-        reset = true;
+        // data.Decision[0].DisplayText = "Resume Game?";
+        // data = _data.GetBeatById(2);
+        // data.DisplayText = "ResumeGame";
+        DisableMenu();
+       // reset = true;
     }
 
     public void EndGame()
@@ -166,45 +172,83 @@ public class Game : MonoBehaviour
 
     public void Pistol()
     {
-        GunController.Instance.SelectGun(EGun.Pistol);
-        reset = true;
+        if (SpawnManager.instance.currentPoints >= 100)
+        {
+
+            SpawnManager.instance.currentPoints -= 100;
+            GunController.Instance.SelectGun(EGun.Pistol);
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
     }
 
     public void Rifle()
     {
-        GunController.Instance.SelectGun(EGun.Rifle);
-        reset = true;
+        if (SpawnManager.instance.currentPoints >= 150)
+        {
+
+            SpawnManager.instance.currentPoints -= 150;
+            GunController.Instance.SelectGun(EGun.Rifle);
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
     }
 
     public void Shotgun()
     {
-        GunController.Instance.SelectGun(EGun.Shotgun);
-        reset = true;
+        if (SpawnManager.instance.currentPoints >= 100)
+        {
+
+            SpawnManager.instance.currentPoints -= 100;
+            GunController.Instance.SelectGun(EGun.Shotgun);
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
     }
 
     public void RandomGun()
     {
-        int newGun = Random.Range(6, 9);
+        if (SpawnManager.instance.currentPoints >= 300)
+        {
 
-        Debug.Log(newGun);
+            int newGun = Random.Range(6, 9);
 
-        GunManager.Instance.gunList[newGun].RandomStats();
+            Debug.Log(newGun);
 
-        GunController.Instance.SelectGun((EGun) newGun);
+            GunManager.Instance.gunList[newGun].RandomStats();
 
-        reset = true;
+            GunController.Instance.SelectGun((EGun)newGun);
+            SpawnManager.instance.currentPoints -= 300;
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
+       
     }
 
     public void DisplayVolume()
     {
         UIController.Instance._VolumeSettings.SetActive(true);
         reset = true;
+        DisableMenu();
     }
 
     public void DisplayConInfo()
     {
         UIController.Instance._ControllerInfo.SetActive(true);
         reset = true;
+        DisableMenu();
     }
 
     public void ExitMenu()
@@ -214,5 +258,203 @@ public class Game : MonoBehaviour
         reset = true;
     }
 
+    public void ExitLaptop()
+    {
+        CameraMovement.Instance.LaptopZoomOut();
+        _ScreenActive = false;
+        reset = true;
+    }
 
+    public void ExitTV()
+    {
+        CameraMovement.Instance.TVZoomOut();
+        _ScreenActive = false;
+        reset = true;
+    }
+
+    public void Firerate()
+    {
+        if (SpawnManager.instance.currentPoints > statPrice)
+        {
+            if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
+            {
+                GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].firerateUpgrade++;
+                GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].fireRate = Mathf.Lerp(
+                    GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].StartFireRate,
+                    GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxFireRate,
+                    ((float)GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].firerateUpgrade) / GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxUpgrades);
+                SpawnManager.instance.currentPoints -= statPrice;
+            }
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
+    }
+
+    public void Damage()
+    {
+        if (SpawnManager.instance.currentPoints > statPrice)
+        {
+            if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
+            {
+                GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].damageUpgrade++;
+                GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].damage = (int)Mathf.Lerp(
+                    GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].StartDamage,
+                    GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxDamage,
+                    ((float)GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].damageUpgrade) / GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxUpgrades);
+                SpawnManager.instance.currentPoints -= statPrice;
+            }
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
+    }
+
+    public void Crit()
+    {
+        if (SpawnManager.instance.currentPoints > statPrice)
+        {
+            if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
+            {
+                GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].critUpgrade++;
+                GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].critChance = (int)Mathf.Lerp(
+                    GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].StartCritChance,
+                    GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxCritChance,
+                    ((float)GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].critUpgrade) / GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxUpgrades);
+                SpawnManager.instance.currentPoints -= statPrice;
+            }
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
+    }
+
+    public void Range()
+    {
+        if (SpawnManager.instance.currentPoints > statPrice)
+        {
+            if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
+            {
+                GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].rangeUpgrade++;
+                GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].range = Mathf.Lerp(
+                    GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].StartRange,
+                    GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxRange,
+                    ((float)GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].rangeUpgrade) / GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxUpgrades);
+                SpawnManager.instance.currentPoints -= statPrice;
+            }
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
+    }
+
+    public void Mag()
+    {
+        if (SpawnManager.instance.currentPoints > statPrice)
+        {
+            if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
+            {
+                GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].magUpgrade++;
+                GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].fullMag = (int)Mathf.Lerp(
+                     GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].startMagazine,
+                     GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxMag,
+                    ((float)GunManager.Instance.currentlyEquipped.magUpgrade) / 10);
+                SpawnManager.instance.currentPoints -= statPrice;
+            }
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
+    }
+
+    public void Swap()
+    {
+        if (SpawnManager.instance.currentPoints > statPrice && PlayerStats.Instance.AddSwap())
+        {
+            SpawnManager.instance.currentPoints -= statPrice;
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
+    }
+
+
+    public void Reload()
+    {
+        if (SpawnManager.instance.currentPoints > statPrice && PlayerStats.Instance.AddReload())
+        {
+            SpawnManager.instance.currentPoints -= statPrice;
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
+    }
+
+    public void Health()
+    {
+        if (SpawnManager.instance.currentPoints > statPrice && PlayerStats.Instance.AddHealth())
+        {
+            SpawnManager.instance.currentPoints -= statPrice;
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
+    }
+
+    public void Movement()
+    {
+        if (SpawnManager.instance.currentPoints > statPrice && PlayerStats.Instance.AddMovement())
+        {
+            SpawnManager.instance.currentPoints -= statPrice;
+            reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
+    }
+
+    void NotEnoughPoints()
+    {
+      
+        DisplayBeat(10);
+    }
+
+    void ResetMenu()
+    {
+        reset = true;
+    }
+
+    public void ChangeStory(StoryData story)
+    {
+        _data = story;
+        DisplayBeat(1);
+        EnableMenu();
+    }
+
+    public void EnableMenu()
+    {
+        disable = false;
+    }
+
+    public void DisableMenu()
+    {
+        disable = true;
+    }
 }

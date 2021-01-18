@@ -7,6 +7,7 @@ public class DeviceInteraction : MonoBehaviour
     public Game laptop;
     public Game computer;
     public Game tv;
+    public GameObject screenFade;
 
     private void OnTriggerStay(Collider other)
     {
@@ -39,7 +40,11 @@ public class DeviceInteraction : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 LightManager.instance.SetLightsOn();
+                UIController.Instance.EneableUI();
                 other.enabled = false;
+                HintScript.Instance.AddHint(2);
+                laptop._ScreenActive = false;
+                screenFade.SetActive(false);
             }
         }
         else if (other.gameObject.tag == "PistolPickUP")
@@ -48,6 +53,8 @@ public class DeviceInteraction : MonoBehaviour
             {
                 other.gameObject.SetActive(false);
                 GunController.Instance.SelectGun(EGun.Pistol);
+                SpawnManager.instance._Start = true;
+                HintScript.Instance.AddHint(3);
             }
         }
     }

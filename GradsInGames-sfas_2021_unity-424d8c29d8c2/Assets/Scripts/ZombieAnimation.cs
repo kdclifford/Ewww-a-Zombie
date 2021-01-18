@@ -95,4 +95,9 @@ public class ZombieAnimation : MonoBehaviour
 
         _Timer -= Time.deltaTime;
     }
+
+
+
+  
+
 }

@@ -4,16 +4,33 @@ using UnityEngine;
 
 public abstract class WeaponStats
 {
+    public float MaxFireRate = 1;
+    public float StartFireRate = 1;
     public float fireRate = 1;
-    public int magazineMAx = 0;
+    public int MaxMag = 0;
+    public int startMagazine = 0;
+    public int fullMag = 0;
     public int currentMagazine = 0;
+    public float StartRange = 1;
+    public float MaxRange = 1;
     public float range = 1;
+    public int StartDamage = 1;
+    public int MaxDamage = 1;
     public int damage = 1;
     public float reloadSpeed = 0;
+    public float StartCritChance = 1;
+    public float MaxCritChance = 1;
     public float critChance = 1;
     public float bulletSpeed = 1000;
     public EGun gunType = EGun.NoGun;
     public float gunHeight = 1.5f;
+
+   public int MaxUpgrades = 10;
+    public int firerateUpgrade = 0;
+    public int rangeUpgrade = 0;
+    public int damageUpgrade = 0;
+    public int magUpgrade = 0;
+    public int critUpgrade = 0;
 
     public abstract void Fire(ParticleSystem particleSystem, GameObject tracer, Vector3 destination, Vector3 gunPos, LayerMask hitObjects);
     public abstract void RandomStats();
@@ -71,13 +88,26 @@ public class Shotgun : WeaponStats
 
     public Shotgun()
     {
-        fireRate = 0.7f;
+        MaxFireRate = 0.1f;
+        MaxDamage = 50;
+        MaxCritChance = 20;
+        MaxMag = 10;
+        MaxRange = 15;
+
+        startMagazine = 6;
+        StartFireRate = 0.7f;
+        StartDamage = 35;
+        StartCritChance = 5;
+        StartRange = 7;
+        fullMag = startMagazine;
+
+        fireRate = StartFireRate;
+        damage = StartDamage;
+        critChance = StartCritChance;
+        currentMagazine = startMagazine;
+        range = StartRange;
+
         reloadSpeed = 1;
-        damage = 35;
-        critChance = 5;
-        magazineMAx = 6;
-        currentMagazine = magazineMAx;
-        range = 7;
         gunType = EGun.Shotgun;
     }
 
@@ -87,14 +117,11 @@ public class Shotgun : WeaponStats
         reloadSpeed = Random.Range(0.5f, 2);
         damage = Random.Range(25, 50);
         critChance = Random.Range(4, 7);
-        magazineMAx = Random.Range(1, 8);
-        currentMagazine = magazineMAx;
+        startMagazine = Random.Range(1, 8);
+        currentMagazine = startMagazine;
         range = Random.Range(5, 10);
         pellets = Random.Range(4, 8);
         pelletSpread = Random.Range(1.5f, 4f);
-
-
-
     }
 
 
@@ -185,13 +212,26 @@ public class Rifle : WeaponStats
 {
     public Rifle()
     {
-        fireRate = 0.3f;
+        MaxFireRate = 0.1f;
+        MaxDamage = 30;
+        MaxCritChance = 20;
+        MaxMag = 50;
+        MaxRange = 30;
+
+        startMagazine = 30;
+        StartFireRate = 0.3f;
+        StartDamage = 15;
+        StartCritChance = 5;
+        StartRange = 20;
+        fullMag = startMagazine;
+
+        fireRate = StartFireRate;
+        damage = StartDamage;
+        critChance = StartCritChance;
+        currentMagazine = startMagazine;
+        range = StartRange;
+
         reloadSpeed = 1;
-        damage = 15;
-        critChance = 5;
-        magazineMAx = 30;
-        currentMagazine = magazineMAx;
-        range = 20;
         gunType = EGun.Rifle;
     }
 
@@ -201,8 +241,8 @@ public class Rifle : WeaponStats
         reloadSpeed = Random.Range(0.5f, 2);
         damage = Random.Range(12, 30);
         critChance = Random.Range(5, 10);
-        magazineMAx = Random.Range(20, 45);
-        currentMagazine = magazineMAx;
+        startMagazine = Random.Range(20, 45);
+        currentMagazine = startMagazine;
         range = Random.Range(15, 30);
     }
 
@@ -222,13 +262,26 @@ public class Pistol : WeaponStats
 {
     public Pistol()
     {
-        fireRate = 0.5f;
-        reloadSpeed = 1;
-        damage = 34;
-        critChance = 10;
-        magazineMAx = 15;
-        currentMagazine = magazineMAx;
-        range = 15;
+        MaxFireRate = 0.01f;
+        MaxDamage = 50;
+        MaxCritChance = 25;
+        MaxMag = 22;
+        MaxRange = 24;
+
+        startMagazine = 15;
+        StartFireRate = 0.5f;
+        StartDamage = 34;
+        StartCritChance = 10;
+        StartRange = 15;
+        fullMag = startMagazine;
+
+        fireRate = StartFireRate;
+        damage = StartDamage;
+        critChance = StartCritChance;
+        currentMagazine = startMagazine;
+        range = StartRange;
+
+        reloadSpeed = 1;        
         gunType = EGun.Pistol;
     }
 
@@ -238,8 +291,8 @@ public class Pistol : WeaponStats
         reloadSpeed = Random.Range(0.5f, 2);
         damage = Random.Range(25, 34);
         critChance = Random.Range(7, 15);
-        magazineMAx = Random.Range(12, 20);
-        currentMagazine = magazineMAx;
+        startMagazine = Random.Range(12, 20);
+        currentMagazine = startMagazine;
         range = Random.Range(12, 20);
     }
 
@@ -266,7 +319,7 @@ public class NoGun : WeaponStats
         reloadSpeed = 0;
         damage = 0;
         critChance = 0;
-        magazineMAx = 0;
+        startMagazine = 0;
         range = 0;
         gunType = EGun.NoGun;
     }

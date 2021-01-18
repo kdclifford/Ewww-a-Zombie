@@ -32,7 +32,7 @@ public class GunController : MonoBehaviour
     PlayerAnimations playerAnimations;
 
     Vector3 endPoint;
-   public LayerMask layerMask;
+    public LayerMask layerMask;
 
     float timer = 0;
 
@@ -53,7 +53,7 @@ public class GunController : MonoBehaviour
     void Update()
     {
         //Reload gun
-        if (!reloadGun && GunManager.Instance.currentlyEquipped.currentMagazine < GunManager.Instance.currentlyEquipped.magazineMAx && GunManager.Instance._AmmoReserves > 0)
+        if (!reloadGun && GunManager.Instance.currentlyEquipped.currentMagazine < GunManager.Instance.currentlyEquipped.fullMag && GunManager.Instance._AmmoReserves > 0)
         {
             if (Input.GetKey(KeyCode.R) || GunManager.Instance.currentlyEquipped.currentMagazine == 0)
             {
@@ -67,12 +67,12 @@ public class GunController : MonoBehaviour
             reloadTimer -= Time.deltaTime;
             if (reloadTimer <= 0)
             {
-                    int tempMagAmmo;
-                    tempMagAmmo = GunManager.Instance.currentlyEquipped.magazineMAx - GunManager.Instance.currentlyEquipped.currentMagazine;
+                int tempMagAmmo;
+                tempMagAmmo = GunManager.Instance.currentlyEquipped.fullMag - GunManager.Instance.currentlyEquipped.currentMagazine;
 
-                if (GunManager.Instance._AmmoReserves + GunManager.Instance.currentlyEquipped.currentMagazine >= GunManager.Instance.currentlyEquipped.magazineMAx)
+                if (GunManager.Instance._AmmoReserves + GunManager.Instance.currentlyEquipped.currentMagazine >= GunManager.Instance.currentlyEquipped.fullMag)
                 {
-                    GunManager.Instance.currentlyEquipped.currentMagazine = GunManager.Instance.currentlyEquipped.magazineMAx;
+                    GunManager.Instance.currentlyEquipped.currentMagazine = GunManager.Instance.currentlyEquipped.fullMag;
                     GunManager.Instance._AmmoReserves -= tempMagAmmo;
                 }
                 else
@@ -111,88 +111,129 @@ public class GunController : MonoBehaviour
 
     public void SelectGun(EGun gun)
     {
-        EGun slot = GunManager.Instance.currentGun;
-
-        if (gun != gunManager._Gun1 && gun != gunManager._Gun2 || (int)gun > (int)EGun.AmountOfGuns)
+        EGun tempGun = gun;
+        if(tempGun > EGun.AmountOfGuns)
         {
-            if((int)gun > (int)EGun.AmountOfGuns && gunManager._Gun1 != EGun.NoGun && gunManager._Gun2 != EGun.NoGun)
-            {
-                if(gunManager._Gun1 == gun)
-                {
-                    gunManager._Gun1 = gun;
-                }
-                else if(gunManager._Gun2 == gun)
-                {
-                    gunManager._Gun2 = gun;
-                }
-            }
-           else if (gunManager._Gun1 == EGun.NoGun)
-            {
-                gunManager._Gun1 = gun;
-            }
-            else if (gunManager._Gun2 == EGun.NoGun)
-            {
-                gunManager._Gun2 = gun;
-            }
-           else if (GunManager.Instance.currentGun == GunManager.Instance._Gun1)
-            {
-                slot = GunManager.Instance._Gun1;
-                GunManager.Instance._Gun1 = gun;
-            }
-            else
-            {
-                slot = GunManager.Instance._Gun2;
-                GunManager.Instance._Gun2 = gun;
-            }
-
-            EGun temp = gun;
-            if(slot > EGun.AmountOfGuns )
-            {
-                slot -= 5;
-            }
-
-            if (gun > EGun.AmountOfGuns)
-            {
-                temp = gun - 5;
-            }
-
-            if (slot == EGun.Shotgun)
-            {
-                shotgun.SetActive(false);
-            }
-            else if (slot == EGun.Pistol)
-            {
-                pistol.SetActive(false);
-            }
-            else if (slot == EGun.Rifle)
-            {
-                rifle.SetActive(false);
-            }
-
-
-            if (temp == EGun.Shotgun)
-            {
-                shotgun.SetActive(true);
-            }
-            else if(temp == EGun.Pistol)
-            {
-                pistol.SetActive(true);
-            }
-            else if (temp == EGun.Rifle)
-            {
-                rifle.SetActive(true);
-            }
-
-
-         
-
-
-            gunManager.currentGun = gun;
-            playerAnimations.EquptGun(gun);
+            tempGun -= 5;
         }
+
+
+        if(!CheckForDupeGun(gun))
+        {
+           
+        }
+        else if (GunManager.Instance._Gun1 == EGun.NoGun)
+        {
+            GunManager.Instance._Gun1 = gun;
+            DisableGun(GunManager.Instance._Gun1, tempGun);
+        }
+        else if (GunManager.Instance._Gun2 == EGun.NoGun)
+        {
+            GunManager.Instance._Gun2 = gun;           
+                DisableGun(GunManager.Instance._Gun2, tempGun);            
+        }
+        else if (GunManager.Instance.currentGun != EGun.FlashLight)
+        {
+            if (gun != GunManager.Instance._Gun1 && gun != GunManager.Instance._Gun2 || tempGun != GunManager.Instance._Gun1 && tempGun != GunManager.Instance._Gun2)
+            {
+                if (GunManager.Instance.currentGun == GunManager.Instance._Gun1)
+                {
+                    GunManager.Instance._Gun1 = gun;
+                }
+                else if (GunManager.Instance.currentGun == GunManager.Instance._Gun2)
+                {
+                    GunManager.Instance._Gun2 = gun;
+
+                }                
+                    DisableGun(GunManager.Instance.currentGun, tempGun);                
+            }
+        }
+        else
+        {
+
+          
+                DisableGun(GunManager.Instance._Gun1, tempGun);
+           
+            GunManager.Instance._Gun1 = gun;
+        }
+        GunManager.Instance.currentGun = gun;
+        playerAnimations.EquptGun(gun);
     }
 
-   
+    bool CheckForDupeGun(EGun gun)
+    {
+        if(GunManager.Instance._Gun1 == gun)
+        {
+            return false;   
+        }
+
+        if (GunManager.Instance._Gun2 == gun)
+        {
+            return false;
+        }
+
+        if(gun > EGun.AmountOfGuns)
+        {
+            if (GunManager.Instance._Gun1 == gun - 5)
+            {
+                GunManager.Instance._Gun1 = gun;
+                return false;
+            }
+
+            if (GunManager.Instance._Gun2 == gun - 5)
+            {
+                GunManager.Instance._Gun2 = gun;
+                return false;
+            }
+        }
+        else
+        {
+            if (GunManager.Instance._Gun1 == gun + 5)
+            {
+                GunManager.Instance._Gun1 = gun;
+                return false;
+            }
+
+            if (GunManager.Instance._Gun2 == gun + 5)
+            {
+                GunManager.Instance._Gun2 = gun;
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
+    void DisableGun(EGun oldGun, EGun newGun)
+    {       
+        if (oldGun == EGun.Shotgun)
+        {
+            shotgun.SetActive(false);
+        }
+        else if (oldGun == EGun.Pistol)
+        {
+            pistol.SetActive(false);
+        }
+        else if (oldGun == EGun.Rifle)
+        {
+            rifle.SetActive(false);
+        }
+
+        if (newGun == EGun.Shotgun)
+        {
+            shotgun.SetActive(true);
+        }
+        else if (newGun == EGun.Pistol)
+        {
+            pistol.SetActive(true);
+        }
+        else if (newGun == EGun.Rifle)
+        {
+            rifle.SetActive(true);
+        }
+    }
 
 
 }

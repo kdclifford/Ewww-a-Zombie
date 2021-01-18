@@ -14,40 +14,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _beats:
   - _choices:
-    - _text: Pistol
-      _beatId: 5
-      _type: 1
-      _functionName: 
-    - _text: Shotgun
-      _beatId: 4
-      _type: 1
-      _functionName: 
-    - _text: Rifle
-      _beatId: 3
-      _type: 0
-      _functionName: New Beat Choice
-    - _text: Gun With Random Stats
-      _beatId: 6
-      _type: 0
-      _functionName: New Beat Choice
-    - _text: Exit Menu?
+    - _text: Firerate
       _beatId: 2
       _type: 0
-      _functionName: New Beat Choice
-    _text: Buy Gun?
+      _functionName: 
+    - _text: Damage
+      _beatId: 3
+      _type: 0
+      _functionName: 
+    - _text: Range
+      _beatId: 4
+      _type: 0
+      _functionName: 
+    - _text: Magazine
+      _beatId: 5
+      _type: 0
+      _functionName: 
+    - _text: Crit Chance
+      _beatId: 6
+      _type: 0
+      _functionName: 
+    - _text: Exit Menu
+      _beatId: 7
+      _type: 0
+      _functionName: 
+    _text: Upgrade Gun for 20 Points
     _id: 1
   - _choices: []
-    _text: ExitMenu
+    _text: Firerate
     _id: 2
   - _choices: []
-    _text: Rifle
+    _text: Damage
     _id: 3
   - _choices: []
-    _text: Shotgun
+    _text: Range
     _id: 4
   - _choices: []
-    _text: Pistol
+    _text: Mag
     _id: 5
   - _choices: []
-    _text: RandomGun
+    _text: Crit
     _id: 6
+  - _choices: []
+    _text: ExitTV
+    _id: 7
+  - _choices: []
+    _text: ResetMenu
+    _id: 8
+  - _choices:
+    - _text: Try Again
+      _beatId: 8
+      _type: 0
+      _functionName: 
+    - _text: Exit Menu?
+      _beatId: 7
+      _type: 0
+      _functionName: 
+    _text: Not Enough Points
+    _id: 10

@@ -23,11 +23,11 @@ public class SpawnManager : MonoBehaviour
     public static SpawnManager instance;
     private int specialRound = 5;
 
-    [HideInInspector]
+   // [HideInInspector]
     public float currentPoints = 0;
 
     bool lights = false;
-
+    public bool _Start = false;
     void Awake()
     {
         if (instance == null)
@@ -53,60 +53,64 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_Start)
+        {
+            HintScript.Instance.AddHint(4);
 
-        if (currentZombieAmount == 0 && currentRound != specialRound)
-        {
-            currentlySpawned = 0;
-            currentRound++;
-            zombieStartAmount = Mathf.RoundToInt((zombieMaxAmount + currentRound) * zombieRoundMultiplier);
-            currentZombieAmount = zombieStartAmount;
-            roundtimer = starttimer;
-        }
-        else if (currentZombieAmount == 0)
-        {
-            currentlySpawned = 0;
-            currentRound++;
-            zombieStartAmount = 5;
-            currentZombieAmount = zombieStartAmount;
-            roundtimer = starttimer;
-            specialRound *= 2;
-        }
-
-        if (currentRound != specialRound)
-        {
-            if (lights)
+            if (currentZombieAmount == 0 && currentRound != specialRound)
             {
-                LightManager.instance.SetLightsOn();
-                lights = false;
+                currentlySpawned = 0;
+                currentRound++;
+                zombieStartAmount = Mathf.RoundToInt((zombieMaxAmount + currentRound) * zombieRoundMultiplier);
+                currentZombieAmount = zombieStartAmount;
+                roundtimer = starttimer;
+            }
+            else if (currentZombieAmount == 0)
+            {
+                currentlySpawned = 0;
+                currentRound++;
+                zombieStartAmount = 5;
+                currentZombieAmount = zombieStartAmount;
+                roundtimer = starttimer;
+                specialRound *= 2;
             }
 
-            if (currentlySpawned < currentZombieAmount && roundtimer <= 0)
+            if (currentRound != specialRound)
             {
-                if (currentlySpawned < maxAmountOnMap)
+                if (lights)
                 {
-                    SpawnZombies(zombiePrefab);
+                    LightManager.instance.SetLightsOn();
+                    lights = false;
+                }
+
+                if (currentlySpawned < currentZombieAmount && roundtimer <= 0)
+                {
+                    if (currentlySpawned < maxAmountOnMap)
+                    {
+                        SpawnZombies(zombiePrefab);
+                    }
                 }
             }
-        }
-        else
-        {
-            if (!lights)
+            else
             {
-                lights = true;
-                LightManager.instance.SetLightsOff();
-            }
-
-            if (currentlySpawned < currentZombieAmount && roundtimer <= 0)
-            {
-                if (currentlySpawned < maxAmountOnMap)
+                if (!lights)
                 {
-                    SpawnZombies(invisibleZombie);
+                    lights = true;
+                    LightManager.instance.SetLightsOff();
+                }
+
+                if (currentlySpawned < currentZombieAmount && roundtimer <= 0)
+                {
+                    if (currentlySpawned < maxAmountOnMap)
+                    {
+                        SpawnZombies(invisibleZombie);
+                    }
                 }
             }
+
+            roundtimer -= Time.deltaTime;
+
         }
-
-        roundtimer -= Time.deltaTime;
-
     }
 
     void SpawnZombies(GameObject agent)
