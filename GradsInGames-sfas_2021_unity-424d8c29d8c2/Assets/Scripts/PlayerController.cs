@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
    // public float groundDistance = 0.4f;
     public LayerMask groundMask;
     private GameObject gameManager;
-
+    public GameObject _PauseMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +34,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            _PauseMenu.SetActive(true);
+        }
+
         // isGrounded = Physics.CheckSphere(transform.position, groundDistance, ~groundMask);
         if (GetComponent<Health>()._CurrentHealth > 0)
         {

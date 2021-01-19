@@ -22,10 +22,10 @@ public class PlayerUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _Reload.text = PlayerStats.Instance.reloadMultiplier.ToString();
-        _Health.text = PlayerStats.Instance.healthMultiplier.ToString();
-        _Swap.text = PlayerStats.Instance.swapMultiplier.ToString();
-        _Movement.text = PlayerStats.Instance.movementMultiplier.ToString();
+        _Reload.text = "Reload Speed = " + PlayerStats.Instance.reloadMultiplier.ToString();
+        _Health.text = "Max Health = " + PlayerStats.Instance.healthMultiplier.ToString();
+        _Swap.text = "Weapon Swap Speed = " + PlayerStats.Instance.swapMultiplier.ToString();
+        _Movement.text =  "Movement Speed = " + PlayerStats.Instance.movementMultiplier.ToString();
     }
 
 }

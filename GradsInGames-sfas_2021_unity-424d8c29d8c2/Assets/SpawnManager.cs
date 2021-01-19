@@ -23,8 +23,11 @@ public class SpawnManager : MonoBehaviour
     public static SpawnManager instance;
     private int specialRound = 5;
 
-   // [HideInInspector]
+    [HideInInspector]
     public float currentPoints = 0;
+    public float overallPoints = 0;
+
+    public int overallZombieKills = 0;
 
     bool lights = false;
     public bool _Start = false;
@@ -134,6 +137,8 @@ public class SpawnManager : MonoBehaviour
         currentlySpawned--;
         currentZombieAmount--;
         currentPoints += 10;
+        overallPoints += 10;
+        overallZombieKills++;
     }
 
 

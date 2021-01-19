@@ -237,6 +237,12 @@ public class Game : MonoBehaviour
        
     }
 
+    public void MaxAmmo()
+    {
+        GunManager.Instance._AmmoReserves = GunManager.Instance._MAXAmmoReserves;
+    }
+
+
     public void DisplayVolume()
     {
         UIController.Instance._VolumeSettings.SetActive(true);
@@ -274,7 +280,7 @@ public class Game : MonoBehaviour
 
     public void Firerate()
     {
-        if (SpawnManager.instance.currentPoints > statPrice)
+        if (SpawnManager.instance.currentPoints >= statPrice)
         {
             if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
             {
@@ -295,7 +301,7 @@ public class Game : MonoBehaviour
 
     public void Damage()
     {
-        if (SpawnManager.instance.currentPoints > statPrice)
+        if (SpawnManager.instance.currentPoints >= statPrice)
         {
             if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
             {
@@ -316,7 +322,7 @@ public class Game : MonoBehaviour
 
     public void Crit()
     {
-        if (SpawnManager.instance.currentPoints > statPrice)
+        if (SpawnManager.instance.currentPoints >= statPrice)
         {
             if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
             {
@@ -337,7 +343,7 @@ public class Game : MonoBehaviour
 
     public void Range()
     {
-        if (SpawnManager.instance.currentPoints > statPrice)
+        if (SpawnManager.instance.currentPoints >= statPrice)
         {
             if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
             {
@@ -358,7 +364,7 @@ public class Game : MonoBehaviour
 
     public void Mag()
     {
-        if (SpawnManager.instance.currentPoints > statPrice)
+        if (SpawnManager.instance.currentPoints >= statPrice)
         {
             if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
             {
@@ -379,7 +385,7 @@ public class Game : MonoBehaviour
 
     public void Swap()
     {
-        if (SpawnManager.instance.currentPoints > statPrice && PlayerStats.Instance.AddSwap())
+        if (SpawnManager.instance.currentPoints >= statPrice && PlayerStats.Instance.AddSwap())
         {
             SpawnManager.instance.currentPoints -= statPrice;
             reset = true;
@@ -393,7 +399,7 @@ public class Game : MonoBehaviour
 
     public void Reload()
     {
-        if (SpawnManager.instance.currentPoints > statPrice && PlayerStats.Instance.AddReload())
+        if (SpawnManager.instance.currentPoints >= statPrice && PlayerStats.Instance.AddReload())
         {
             SpawnManager.instance.currentPoints -= statPrice;
             reset = true;
@@ -406,7 +412,7 @@ public class Game : MonoBehaviour
 
     public void Health()
     {
-        if (SpawnManager.instance.currentPoints > statPrice && PlayerStats.Instance.AddHealth())
+        if (SpawnManager.instance.currentPoints >= statPrice && PlayerStats.Instance.AddHealth())
         {
             SpawnManager.instance.currentPoints -= statPrice;
             reset = true;
@@ -419,7 +425,7 @@ public class Game : MonoBehaviour
 
     public void Movement()
     {
-        if (SpawnManager.instance.currentPoints > statPrice && PlayerStats.Instance.AddMovement())
+        if (SpawnManager.instance.currentPoints >= statPrice && PlayerStats.Instance.AddMovement())
         {
             SpawnManager.instance.currentPoints -= statPrice;
             reset = true;
