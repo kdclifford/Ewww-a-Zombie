@@ -71,7 +71,7 @@ public class CameraMovement : MonoBehaviour
 
         startPos = transform.position - player.position;
 
-        laptopPos = new Vector3(4.68f, 1f, 1.56f);
+        laptopPos = new Vector3(4.85f, 1f, 1.56f);
         laptopRot = Quaternion.Euler( new Vector3(21.26f, -9.3f, 0f ));
 
         tvPos = new Vector3(-8.93f, -1.349f, -10f);

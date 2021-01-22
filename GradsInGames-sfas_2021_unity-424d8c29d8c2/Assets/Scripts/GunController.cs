@@ -88,7 +88,7 @@ public class GunController : MonoBehaviour
 
         if (!reloadGun)
         {
-            if (gunManager.currentGun != EGun.NoGun && gunManager.currentGun != EGun.FlashLight && Input.GetKey(KeyCode.Space) && timer < 0)
+            if (gunManager.currentGun != EGun.NoGun && gunManager.currentGun != EGun.FlashLight && Input.GetMouseButton(0) && timer < 0)
             {
                 Vector3 newGunPos = transform.position;
                 newGunPos.y = transform.position.y + gunManager.currentlyEquipped.gunHeight;

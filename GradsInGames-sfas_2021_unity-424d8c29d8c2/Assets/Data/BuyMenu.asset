@@ -41,7 +41,7 @@ MonoBehaviour:
     _text: Buy Gun?
     _id: 1
   - _choices: []
-    _text: ExitMenu
+    _text: ExitComputer
     _id: 2
   - _choices: []
     _text: Rifle

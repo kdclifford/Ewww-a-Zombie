@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _beats:
   - _choices:
+    - _text: Range
+      _beatId: 4
+      _type: 0
+      _functionName: 
     - _text: Firerate
       _beatId: 2
       _type: 0
@@ -22,11 +26,7 @@ MonoBehaviour:
       _beatId: 3
       _type: 0
       _functionName: 
-    - _text: Range
-      _beatId: 4
-      _type: 0
-      _functionName: 
-    - _text: Magazine
+    - _text: Mag Size
       _beatId: 5
       _type: 0
       _functionName: 

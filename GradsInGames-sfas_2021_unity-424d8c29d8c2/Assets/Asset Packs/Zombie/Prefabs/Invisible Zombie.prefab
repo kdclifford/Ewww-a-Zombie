@@ -813,6 +813,7 @@ GameObject:
   - component: {fileID: 2159588047684112255}
   - component: {fileID: 7881156656985994951}
   - component: {fileID: 4688618740363423661}
+  - component: {fileID: 3636649704531337274}
   m_Layer: 12
   m_Name: Invisible Zombie
   m_TagString: Invisible
@@ -922,6 +923,18 @@ MonoBehaviour:
   rightPos: {fileID: 7177311232607997551}
   leftPos: {fileID: 8576936678384268589}
   off: {x: 0.2, y: 0, z: 0.5}
+--- !u!114 &3636649704531337274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4688618740363423650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231d6daf7ac02f146bb1b2e0cbde8dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4857174048980236083
 GameObject:
   m_ObjectHideFlags: 0

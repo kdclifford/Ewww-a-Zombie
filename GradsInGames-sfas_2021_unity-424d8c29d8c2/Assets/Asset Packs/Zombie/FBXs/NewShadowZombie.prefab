@@ -1641,7 +1641,7 @@ GameObject:
   - component: {fileID: -2551564668077428407}
   - component: {fileID: 4480378201869074031}
   - component: {fileID: -3563864740676384809}
-  - component: {fileID: 535257600}
+  - component: {fileID: 7448483964035724361}
   m_Layer: 12
   m_Name: NewShadowZombie
   m_TagString: Untagged
@@ -1720,7 +1720,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c5f633f931a1240bd157220fc76360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedOffset: 0.5
+  zombieSpeed: 1
+  setSpeed: 0
 --- !u!114 &-3563864740676384809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1735,7 +1736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MaxHealth: 100
   _CurrentHealth: 0
---- !u!114 &535257600
+--- !u!114 &7448483964035724361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1744,10 +1745,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7117011466115538610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ed37ea39b7f7ae48b513efd9b158c91, type: 3}
+  m_Script: {fileID: 11500000, guid: 231d6daf7ac02f146bb1b2e0cbde8dbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cube: {fileID: 3495219490519917623}
 --- !u!1 &7253658670332208741
 GameObject:
   m_ObjectHideFlags: 0

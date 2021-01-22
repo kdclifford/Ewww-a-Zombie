@@ -8,10 +8,15 @@ public class Game : MonoBehaviour
     private TextDisplay _output;
     private BeatData _currentBeat;
     private WaitForSeconds _wait;
-    public bool _ScreenActive = false;
-    private bool reset = false;
-    private bool disable = false;
-    private float statPrice = 20;
+
+    //Resets screen dialogue
+    private bool _reset = false;
+    //Is screen being used
+    public bool _screenActive = false;
+    //disable all screens
+    private bool _disable = false;
+    //price to buy player and gun upgrades
+    private float _statPrice = 20;
 
     private void Awake()
     {
@@ -22,9 +27,8 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
-        if (_ScreenActive)
-        {
-            
+        if (_screenActive)
+        {            
             if (_output.IsIdle)
             {
                 if (_currentBeat == null)
@@ -35,16 +39,13 @@ public class Game : MonoBehaviour
                 {
                     UpdateInput();
                 }
-                //Debug.Log(_currentBeat.ID);
-                //Debug.Log(_currentBeat.DisplayText);
             }
         }
-
     }
 
     private void UpdateInput()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || reset)
+        if (Input.GetKeyDown(KeyCode.Escape) || _reset)
         {
             if (_currentBeat != null)
             {
@@ -57,9 +58,9 @@ public class Game : MonoBehaviour
                     DisplayBeat(1);
                 }
             }
-            reset = false;
+            _reset = false;
         }
-        else if (_currentBeat.Decision.Count > 0 && !disable)
+        else if (_currentBeat.Decision.Count > 0 && !_disable)
         {
             KeyCode alpha = KeyCode.Alpha1;
             KeyCode keypad = KeyCode.Keypad1;
@@ -91,16 +92,12 @@ public class Game : MonoBehaviour
         }
     }
 
-
+    //Away to call functions from dialogue
     private void FunctionBeat(int id)
     {
         BeatData data = _data.GetBeatById(id);
         SendMessage(data.DisplayText);
-        // StartCoroutine(DoDisplay(data));
-       // _currentBeat = data;
-       // _output.Clear();
     }
-
 
     private void DisplayBeat(int id)
     {
@@ -148,15 +145,10 @@ public class Game : MonoBehaviour
     public void StartGame()
     {
         _output.Clear();
-       // transform.GetChild(0).gameObject.SetActive(false);
         transform.GetChild(2).gameObject.SetActive(true);
         transform.GetChild(3).gameObject.SetActive(true);
         BeatData data = _data.GetBeatById(1);
-        // data.Decision[0].DisplayText = "Resume Game?";
-        // data = _data.GetBeatById(2);
-        // data.DisplayText = "ResumeGame";
         DisableMenu();
-       // reset = true;
     }
 
     public void EndGame()
@@ -164,12 +156,7 @@ public class Game : MonoBehaviour
         Application.Quit();
     }
 
-    public void ResumeGame()
-    {
-        CameraMovement.Instance.LaptopZoomOut();
-        reset = true;
-    }
-
+    //Buy guns
     public void Pistol()
     {
         if (SpawnManager.instance.currentPoints >= 100)
@@ -177,7 +164,7 @@ public class Game : MonoBehaviour
 
             SpawnManager.instance.currentPoints -= 100;
             GunController.Instance.SelectGun(EGun.Pistol);
-            reset = true;
+            _reset = true;
         }
         else
         {
@@ -192,7 +179,7 @@ public class Game : MonoBehaviour
 
             SpawnManager.instance.currentPoints -= 150;
             GunController.Instance.SelectGun(EGun.Rifle);
-            reset = true;
+            _reset = true;
         }
         else
         {
@@ -207,7 +194,7 @@ public class Game : MonoBehaviour
 
             SpawnManager.instance.currentPoints -= 100;
             GunController.Instance.SelectGun(EGun.Shotgun);
-            reset = true;
+            _reset = true;
         }
         else
         {
@@ -228,7 +215,7 @@ public class Game : MonoBehaviour
 
             GunController.Instance.SelectGun((EGun)newGun);
             SpawnManager.instance.currentPoints -= 300;
-            reset = true;
+            _reset = true;
         }
         else
         {
@@ -237,50 +224,63 @@ public class Game : MonoBehaviour
        
     }
 
+    //Buy ammo
     public void MaxAmmo()
     {
-        GunManager.Instance._AmmoReserves = GunManager.Instance._MAXAmmoReserves;
+        if (SpawnManager.instance.currentPoints >= 200)
+        {
+            GunManager.Instance._AmmoReserves = GunManager.Instance._MAXAmmoReserves;
+            SpawnManager.instance.currentPoints -= 200;
+            _reset = true;
+        }
+        else
+        {
+            NotEnoughPoints();
+        }
     }
 
 
+    //Display settings
     public void DisplayVolume()
     {
         UIController.Instance._VolumeSettings.SetActive(true);
-        reset = true;
+        _reset = true;
         DisableMenu();
     }
 
     public void DisplayConInfo()
     {
         UIController.Instance._ControllerInfo.SetActive(true);
-        reset = true;
+        _reset = true;
         DisableMenu();
     }
 
-    public void ExitMenu()
+    //Exit Device views
+    public void ExitComputer()
     {
         CameraMovement.Instance.ComputerZoomOut();
-        _ScreenActive = false;
-        reset = true;
+        _screenActive = false;
+        _reset = true;
     }
 
     public void ExitLaptop()
     {
         CameraMovement.Instance.LaptopZoomOut();
-        _ScreenActive = false;
-        reset = true;
+        _screenActive = false;
+        _reset = true;
     }
 
     public void ExitTV()
     {
         CameraMovement.Instance.TVZoomOut();
-        _ScreenActive = false;
-        reset = true;
+        _screenActive = false;
+        _reset = true;
     }
 
+    //Upgrade Gun Stats
     public void Firerate()
     {
-        if (SpawnManager.instance.currentPoints >= statPrice)
+        if (SpawnManager.instance.currentPoints >= _statPrice)
         {
             if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
             {
@@ -289,9 +289,9 @@ public class Game : MonoBehaviour
                     GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].StartFireRate,
                     GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxFireRate,
                     ((float)GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].firerateUpgrade) / GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxUpgrades);
-                SpawnManager.instance.currentPoints -= statPrice;
+                SpawnManager.instance.currentPoints -= _statPrice;
             }
-            reset = true;
+            _reset = true;
         }
         else
         {
@@ -301,7 +301,7 @@ public class Game : MonoBehaviour
 
     public void Damage()
     {
-        if (SpawnManager.instance.currentPoints >= statPrice)
+        if (SpawnManager.instance.currentPoints >= _statPrice)
         {
             if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
             {
@@ -310,9 +310,9 @@ public class Game : MonoBehaviour
                     GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].StartDamage,
                     GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxDamage,
                     ((float)GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].damageUpgrade) / GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxUpgrades);
-                SpawnManager.instance.currentPoints -= statPrice;
+                SpawnManager.instance.currentPoints -= _statPrice;
             }
-            reset = true;
+            _reset = true;
         }
         else
         {
@@ -322,7 +322,7 @@ public class Game : MonoBehaviour
 
     public void Crit()
     {
-        if (SpawnManager.instance.currentPoints >= statPrice)
+        if (SpawnManager.instance.currentPoints >= _statPrice)
         {
             if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
             {
@@ -331,9 +331,9 @@ public class Game : MonoBehaviour
                     GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].StartCritChance,
                     GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxCritChance,
                     ((float)GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].critUpgrade) / GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxUpgrades);
-                SpawnManager.instance.currentPoints -= statPrice;
+                SpawnManager.instance.currentPoints -= _statPrice;
             }
-            reset = true;
+            _reset = true;
         }
         else
         {
@@ -343,7 +343,7 @@ public class Game : MonoBehaviour
 
     public void Range()
     {
-        if (SpawnManager.instance.currentPoints >= statPrice)
+        if (SpawnManager.instance.currentPoints >= _statPrice)
         {
             if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
             {
@@ -352,9 +352,9 @@ public class Game : MonoBehaviour
                     GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].StartRange,
                     GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxRange,
                     ((float)GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].rangeUpgrade) / GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxUpgrades);
-                SpawnManager.instance.currentPoints -= statPrice;
+                SpawnManager.instance.currentPoints -= _statPrice;
             }
-            reset = true;
+            _reset = true;
         }
         else
         {
@@ -364,7 +364,7 @@ public class Game : MonoBehaviour
 
     public void Mag()
     {
-        if (SpawnManager.instance.currentPoints >= statPrice)
+        if (SpawnManager.instance.currentPoints >= _statPrice)
         {
             if (GunManager.Instance.currentGun < EGun.AmountOfGuns)
             {
@@ -373,9 +373,9 @@ public class Game : MonoBehaviour
                      GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].startMagazine,
                      GunManager.Instance.gunList[(int)GunManager.Instance.currentGun].MaxMag,
                     ((float)GunManager.Instance.currentlyEquipped.magUpgrade) / 10);
-                SpawnManager.instance.currentPoints -= statPrice;
+                SpawnManager.instance.currentPoints -= _statPrice;
             }
-            reset = true;
+            _reset = true;
         }
         else
         {
@@ -383,12 +383,13 @@ public class Game : MonoBehaviour
         }
     }
 
+    //Upgrade Player Stats
     public void Swap()
     {
-        if (SpawnManager.instance.currentPoints >= statPrice && PlayerStats.Instance.AddSwap())
+        if (SpawnManager.instance.currentPoints >= _statPrice && PlayerStats.Instance.AddSwap())
         {
-            SpawnManager.instance.currentPoints -= statPrice;
-            reset = true;
+            SpawnManager.instance.currentPoints -= _statPrice;
+            _reset = true;
         }
         else
         {
@@ -399,10 +400,10 @@ public class Game : MonoBehaviour
 
     public void Reload()
     {
-        if (SpawnManager.instance.currentPoints >= statPrice && PlayerStats.Instance.AddReload())
+        if (SpawnManager.instance.currentPoints >= _statPrice && PlayerStats.Instance.AddReload())
         {
-            SpawnManager.instance.currentPoints -= statPrice;
-            reset = true;
+            SpawnManager.instance.currentPoints -= _statPrice;
+            _reset = true;
         }
         else
         {
@@ -412,10 +413,10 @@ public class Game : MonoBehaviour
 
     public void Health()
     {
-        if (SpawnManager.instance.currentPoints >= statPrice && PlayerStats.Instance.AddHealth())
+        if (SpawnManager.instance.currentPoints >= _statPrice && PlayerStats.Instance.AddHealth())
         {
-            SpawnManager.instance.currentPoints -= statPrice;
-            reset = true;
+            SpawnManager.instance.currentPoints -= _statPrice;
+            _reset = true;
         }
         else
         {
@@ -425,10 +426,10 @@ public class Game : MonoBehaviour
 
     public void Movement()
     {
-        if (SpawnManager.instance.currentPoints >= statPrice && PlayerStats.Instance.AddMovement())
+        if (SpawnManager.instance.currentPoints >= _statPrice && PlayerStats.Instance.AddMovement())
         {
-            SpawnManager.instance.currentPoints -= statPrice;
-            reset = true;
+            SpawnManager.instance.currentPoints -= _statPrice;
+            _reset = true;
         }
         else
         {
@@ -436,17 +437,18 @@ public class Game : MonoBehaviour
         }
     }
 
+    //Display point check beat
     void NotEnoughPoints()
-    {
-      
+    {      
         DisplayBeat(10);
     }
 
     void ResetMenu()
     {
-        reset = true;
+        _reset = true;
     }
 
+    //Change story data
     public void ChangeStory(StoryData story)
     {
         _data = story;
@@ -454,13 +456,14 @@ public class Game : MonoBehaviour
         EnableMenu();
     }
 
+    //Enable and diable screen all use
     public void EnableMenu()
     {
-        disable = false;
+        _disable = false;
     }
 
     public void DisableMenu()
     {
-        disable = true;
+        _disable = true;
     }
 }

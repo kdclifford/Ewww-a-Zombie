@@ -26,10 +26,6 @@ MonoBehaviour:
       _beatId: 4
       _type: 0
       _functionName: 
-    - _text: Exit Menu
-      _beatId: 5
-      _type: 0
-      _functionName: 
     - _text: Exit Game?
       _beatId: 6
       _type: 0
@@ -45,9 +41,6 @@ MonoBehaviour:
   - _choices: []
     _text: DisplayConInfo
     _id: 4
-  - _choices: []
-    _text: ExitMenu
-    _id: 5
   - _choices: []
     _text: ExitGame
     _id: 6

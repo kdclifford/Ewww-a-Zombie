@@ -28,7 +28,7 @@ public class PlayerAnimations : MonoBehaviour
         {
             EquptGun(EGun.FlashLight);
         }
-        else if (Input.GetKey(KeyCode.I))
+        else if (Input.GetKey(KeyCode.E))
         {
             EGun gun1 = gunManager._Gun1;
             EGun gun2 = gunManager._Gun2;

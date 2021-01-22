@@ -18,10 +18,6 @@ MonoBehaviour:
       _beatId: 2
       _type: 0
       _functionName: 
-    - _text: Movement Speed
-      _beatId: 3
-      _type: 0
-      _functionName: 
     - _text: Max Health
       _beatId: 4
       _type: 0
@@ -30,14 +26,15 @@ MonoBehaviour:
       _beatId: 5
       _type: 0
       _functionName: 
+    - _text: 'Exit Menu? '
+      _beatId: 7
+      _type: 0
+      _functionName: 
     _text: Upgrade Player for 20 Points
     _id: 1
   - _choices: []
     _text: Reload
     _id: 2
-  - _choices: []
-    _text: Movement
-    _id: 3
   - _choices: []
     _text: Health
     _id: 4

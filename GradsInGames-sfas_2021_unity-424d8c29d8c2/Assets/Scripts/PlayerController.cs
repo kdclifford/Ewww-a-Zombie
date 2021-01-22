@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float _movementSpeed;
+    public float _startMovementSpeed;
     public Vector3 point;
 
     //private Rigidbody _RB;
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            move = move.normalized * (_movementSpeed * Time.deltaTime);
+            move = move.normalized * ((_startMovementSpeed * PlayerStats.Instance.movementMultiplier) * Time.deltaTime);
 
 
             controller.Move(move);
