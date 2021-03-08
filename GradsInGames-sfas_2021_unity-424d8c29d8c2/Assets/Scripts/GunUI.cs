@@ -26,7 +26,7 @@ public class GunUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
-        if(GunManager.Instance.currentGun != EGun.NoGun && GunManager.Instance.currentGun != EGun.FlashLight)
+        if(GunManager.Instance.currentGun != EGun.NoGun && GunManager.Instance.currentGun != EGun.Torch)
         {
             CurrentGun(GunManager.Instance.currentlyEquipped);
         }

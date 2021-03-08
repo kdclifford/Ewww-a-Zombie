@@ -66,7 +66,7 @@ public class PlayerStats : MonoBehaviour
         {
             for (int i = 0; i < GunManager.Instance.gunList.Count; i++)
             {
-                if(GunManager.Instance.gunList[i].gunType != EGun.NoGun && GunManager.Instance.gunList[i].gunType != EGun.FlashLight)
+                if(GunManager.Instance.gunList[i].gunType != EGun.NoGun && GunManager.Instance.gunList[i].gunType != EGun.Torch)
                 {
                     GunManager.Instance.gunList[i].reloadSpeed /= reloadMultiplier;
                 }

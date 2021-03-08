@@ -26,7 +26,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.T))
         {
-            EquptGun(EGun.FlashLight);
+            EquptGun(EGun.Torch);
         }
         else if (Input.GetKey(KeyCode.E))
         {
@@ -102,9 +102,9 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
-    public void CurrentFlashLight()
+    public void CurrentTorch()
     {
-        gunManager.currentGun = EGun.FlashLight;
+        gunManager.currentGun = EGun.Torch;
     }
 
     public void CurrentNoGun()
@@ -119,7 +119,7 @@ public enum EGun
     Shotgun = 1,
     Pistol = 2,
     Rifle = 3,
-    FlashLight = 4,
+    Torch = 4,
     AmountOfGuns,
     CustomShotgun,
     CustomPistol,

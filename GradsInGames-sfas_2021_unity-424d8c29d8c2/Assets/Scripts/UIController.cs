@@ -49,7 +49,7 @@ public class UIController : MonoBehaviour
 
         _ZombieAmount.text = "Zombies Left:" + SpawnManager.instance.currentZombieAmount.ToString();
 
-        if (GunManager.Instance.currentGun == EGun.NoGun || GunManager.Instance.currentGun == EGun.FlashLight)
+        if (GunManager.Instance.currentGun == EGun.NoGun || GunManager.Instance.currentGun == EGun.Torch)
         {
             _AmmoCounter.text = GunManager.Instance._AmmoReserves.ToString();
         }

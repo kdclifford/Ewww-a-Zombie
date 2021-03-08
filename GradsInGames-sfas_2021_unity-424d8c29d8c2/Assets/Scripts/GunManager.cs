@@ -68,7 +68,7 @@ public class GunManager : MonoBehaviour
                 temp -= 5;
             }
 
-            if (currentGun != EGun.NoGun && currentGun != EGun.FlashLight)
+            if (currentGun != EGun.NoGun && currentGun != EGun.Torch)
             {
                 particleSystem = GameObject.FindGameObjectWithTag(temp.ToString()).GetComponentInChildren<ParticleSystem>();
             }

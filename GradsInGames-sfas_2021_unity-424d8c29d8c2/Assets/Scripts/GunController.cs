@@ -88,7 +88,7 @@ public class GunController : MonoBehaviour
 
         if (!reloadGun)
         {
-            if (gunManager.currentGun != EGun.NoGun && gunManager.currentGun != EGun.FlashLight && Input.GetMouseButton(0) && timer < 0)
+            if (gunManager.currentGun != EGun.NoGun && gunManager.currentGun != EGun.Torch && Input.GetMouseButton(0) && timer < 0)
             {
                 Vector3 newGunPos = transform.position;
                 newGunPos.y = transform.position.y + gunManager.currentlyEquipped.gunHeight;
@@ -132,7 +132,7 @@ public class GunController : MonoBehaviour
             GunManager.Instance._Gun2 = gun;           
                 DisableGun(GunManager.Instance._Gun2, tempGun);            
         }
-        else if (GunManager.Instance.currentGun != EGun.FlashLight)
+        else if (GunManager.Instance.currentGun != EGun.Torch)
         {
             if (gun != GunManager.Instance._Gun1 && gun != GunManager.Instance._Gun2 || tempGun != GunManager.Instance._Gun1 && tempGun != GunManager.Instance._Gun2)
             {

@@ -21,7 +21,7 @@ public class Torch : MonoBehaviour
         Quaternion startingAngle = Quaternion.AngleAxis(-45, Vector3.up);
         Quaternion stepAngle = Quaternion.AngleAxis(5, Vector3.up);
 
-        if (GunManager.Instance.currentGun == EGun.FlashLight)
+        if (GunManager.Instance.currentGun == EGun.Torch)
         {
             DetectThings(startingAngle, stepAngle);
         }

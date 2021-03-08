@@ -1196,7 +1196,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: CurrentFlashLight
+    functionName: CurrentTorch
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
