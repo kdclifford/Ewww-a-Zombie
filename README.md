@@ -2,9 +2,14 @@
 
 My submission to Search for a Star 2021 competition
 
-![](https://github.com/kdclifford/Ewww-a-Zombie/blob/main/GradsInGames-sfas_2021_unity-424d8c29d8c2/Imgs/Round1Image.png)
+<img src="https://github.com/kdclifford/Ewww-a-Zombie/blob/main/GradsInGames-sfas_2021_unity-424d8c29d8c2/Imgs/Search%20for%20a%20Star.jpg" width="573" height="324">
+
+[![](https://github.com/kdclifford/Ewww-a-Zombie/blob/main/GradsInGames-sfas_2021_unity-424d8c29d8c2/Imgs/Round1Image.png)](https://www.youtube.com/watch?v=tsR1_2vfoho&t=19s&ab_channel=Bleh "YouTube Link")
 
 > Ewww a Zombie Preview
+
+
+
  
  Ewww a zombie placed 17th overall out of a possible 54 places.
  
